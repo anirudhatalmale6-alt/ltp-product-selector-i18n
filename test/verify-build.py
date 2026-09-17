@@ -111,7 +111,16 @@ with sync_playwright() as p:
     check_true("runtime present", pg.evaluate("() => typeof window.LTPI18n === 'object'"))
     check_true("register() ran during bootstrap", pg.evaluate("() => !!(window.LTPI18n && window.LTPI18n._map)"))
     codes = sorted(pg.evaluate("() => Object.keys(window.LTPI18n._map)"))
-    check("locale map codes", codes, ["en", "pl", "ro", "tr"])
+    print("     locale map: %s" % ", ".join(codes))
+    # The built-ins must survive, and whatever the build added must be present.
+    # Don't pin an exact list - the point of this package is that the list grows.
+    check_true("built-in languages still registered",
+               all(c in codes for c in ("en", "ro", "tr")), codes)
+    check_true("at least one added language registered", len(codes) > 3, codes)
+    added = [c for c in codes if c not in ("en", "ro", "tr")]
+    check_true("added languages are lazy loaders",
+               all(pg.evaluate("(c) => typeof window.LTPI18n._map[c] === 'function'", c) for c in added),
+               added)
     check_true("no network request for locale data",
                pg.evaluate("() => typeof window.LTPI18n._map.pl === 'function'"))
 
@@ -154,6 +163,20 @@ with sync_playwright() as p:
             return txt.length;
         }""")
         check_true("original still fetchable for comparison", same > 0)
+
+    # Every added language must actually resolve, not just be registered.
+    print("\n== every added language resolves ==")
+    for c in added:
+        res2 = pg.evaluate("""async (c) => {
+            try {
+              const i = window.LTPI18n._map[c];
+              const d = (typeof i === 'function') ? await i() : i;
+              const n = Object.keys(d.messages).length;
+              return { ok: n > 1, n: n, sample: (d.messages['Product Selector'] || [''])[0] };
+            } catch (e) { return { ok: false, err: String(e) }; }
+        }""", c)
+        check_true("%s resolves (%d entries)  %r" % (c, res2.get("n", 0), res2.get("sample", "")[:34]),
+                   res2.get("ok"), res2.get("err", ""))
 
     # switch languages through the real UI
     print("\n== switching through the app's own UI ==")

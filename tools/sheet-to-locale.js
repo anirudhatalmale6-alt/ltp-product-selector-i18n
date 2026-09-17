@@ -42,22 +42,46 @@ const PLURALS = {
 
 const argv = process.argv.slice(2);
 function opt(name) { const i = argv.indexOf(name); return i !== -1 ? argv[i + 1] : null; }
+
 const code = opt('--code');
 const name = opt('--name');
 const output = opt('-o');
 const input = argv.filter((a, i) => !a.startsWith('-') &&
-  !['--code', '--name', '-o'].some(f => argv.indexOf(f) !== -1 && i === argv.indexOf(f) + 1))[0];
+  !['--code', '--name', '-o', '--column'].some(f => argv.indexOf(f) !== -1 && i === argv.indexOf(f) + 1))[0];
 
 if (!input || !code || !output) {
   die('usage: node tools/sheet-to-locale.js <sheet.csv> --code <xx> --name <Name> -o <out.json>');
 }
 if (!fs.existsSync(input)) die('no such file: ' + input);
 
+console.log('sheet-to-locale.js');
+console.log('  sheet   : ' + path.resolve(input));
+console.log('  language: ' + code + (name ? ' (' + name + ')' : ''));
+
 const rows = csv.parse(fs.readFileSync(input, 'utf8'));
 if (rows.length < 2) die('the sheet has no rows');
 
-// drop the header row if present
-const start = /english/i.test(rows[0][0] || '') ? 1 : 0;
+const header = rows[0] || [];
+const hasHeader = /english/i.test(header[0] || '');
+const start = hasHeader ? 1 : 0;
+
+// Which column holds this language? A multi-language sheet labels each column
+// "French (fr)"; a single-language sheet just has "Translation".
+let col = 1;
+if (hasHeader) {
+  const byCode = header.findIndex(h => new RegExp('\\(\\s*' + code + '\\s*\\)', 'i').test(h || ''));
+  const byName = opt('--column')
+    ? header.findIndex(h => String(h || '').toLowerCase().includes(String(opt('--column')).toLowerCase()))
+    : -1;
+  const generic = header.findIndex(h => /^translation$/i.test(String(h || '').trim()));
+  col = byName !== -1 ? byName : (byCode !== -1 ? byCode : generic);
+  if (col === -1) {
+    die('could not find a column for "' + code + '" in this sheet.\n' +
+        '       columns are: ' + header.map((h, i) => i + '=' + JSON.stringify(h)).join(', ') + '\n' +
+        '       pass --column "<header text>" to choose one explicitly.');
+  }
+}
+console.log('  column  : ' + col + (hasHeader ? ' (' + JSON.stringify(header[col]) + ')' : ''));
 
 const placeholders = s => (String(s).match(/\{[0-9]\}/g) || []).sort().join(',');
 
@@ -65,9 +89,9 @@ const messages = {};
 const blank = [], phMissing = [], phExtra = [];
 
 for (let i = start; i < rows.length; i++) {
-  const [source, translation] = rows[i];
+  const source = rows[i][0];
   if (!source) continue;
-  const value = (translation || '').trim();
+  const value = (rows[i][col] || '').trim();
   if (!value) { blank.push(source); continue; }
 
   const want = placeholders(source);
@@ -95,9 +119,6 @@ messages[''] = {
 };
 
 // report
-console.log('sheet-to-locale.js');
-console.log('  sheet   : ' + path.resolve(input));
-console.log('  language: ' + code + (name ? ' (' + name + ')' : ''));
 console.log('  filled  : ' + (Object.keys(messages).length - 1) + ' phrases');
 
 let fatal = 0;
