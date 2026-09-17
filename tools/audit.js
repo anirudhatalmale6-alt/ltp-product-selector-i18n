@@ -91,6 +91,71 @@ let problems = 0;
 console.log('audit: ' + path.resolve(input));
 console.log('       ' + mods.length + ' modules, ' + dicts.length + ' translation dictionaries\n');
 
+// ------------------------------------------------- where is the encoding damage?
+//
+// This matters before anything else. If double-encoded text appears in
+// third-party library code as well as in the translations, the whole FILE was
+// transcoded at some point - typically by saving it, or running it through an
+// online beautifier, that read UTF-8 as Windows-1252. In that case the
+// translations are not damaged at all and the original file should be used.
+//
+// Only damage confined to the dictionaries means the translation data itself
+// is wrong.
+function encodingProvenance(source, dictModuleIds) {
+  const dictSrc = new Set(dictModuleIds.map(id => mods[id].toString()));
+  const lines = source.split(/\r?\n/);
+  const isDictLine = (() => {
+    const ranges = [];
+    for (const body of dictSrc) {
+      const at = source.indexOf(body);
+      if (at < 0) continue;
+      const start = source.slice(0, at).split('\n').length;
+      ranges.push([start, start + body.split('\n').length]);
+    }
+    return ln => ranges.some(([a, b]) => ln >= a && ln <= b);
+  })();
+
+  let inDict = 0, outDict = 0;
+  const samples = [];
+  lines.forEach((l, i) => {
+    const b = Buffer.from(l, 'utf8');
+    let n = 0;
+    for (let k = 0; k < b.length - 3; k++) {
+      if (b[k] === 0xC3 && (b[k + 1] === 0x82 || b[k + 1] === 0x83)) n++;
+      else if ((b[k] === 0xC4 || b[k] === 0xC5) && b[k + 1] >= 0x80 && b[k + 1] <= 0xBF &&
+               b[k + 2] >= 0xC2 && b[k + 2] <= 0xC5) n++;
+    }
+    if (!n) return;
+    if (isDictLine(i + 1)) inDict += n;
+    else { outDict += n; if (samples.length < 4) samples.push('line ' + (i + 1) + ': ' + l.trim().slice(0, 96)); }
+  });
+  return { inDict, outDict, samples };
+}
+
+const prov = encodingProvenance(source, dicts.map(d => d.id));
+console.log('=== encoding provenance ===');
+if (!prov.inDict && !prov.outDict) {
+  console.log('  clean - no double-encoded text anywhere in this file\n');
+} else if (prov.outDict > 0) {
+  console.log('  double-encoded text found in BOTH the translations (' + prov.inDict +
+              ') and in unrelated code (' + prov.outDict + '):');
+  prov.samples.forEach(s => console.log('    ' + s));
+  console.log('');
+  console.log('  Those outside hits are third-party library constants that ship correct');
+  console.log('  from npm, so they cannot have been damaged by a translation workflow.');
+  console.log('  This file has been transcoded as a whole - most likely by an online');
+  console.log('  beautifier/unminifier reading UTF-8 as Windows-1252.');
+  console.log('');
+  console.log('  => The translations are probably FINE in the original file.');
+  console.log('     Audit the real deployed .js, and do NOT run --fix-encoding on it.\n');
+} else {
+  console.log('  double-encoded text found ONLY inside the translation dictionaries (' +
+              prov.inDict + ' occurrences),');
+  console.log('  and nowhere else in the file. That points at the translation data itself,');
+  console.log('  so --fix-encoding is appropriate here.\n');
+  problems++;
+}
+
 for (const { id, dict } of dicts) {
   const header = dict[''] || {};
   const code = String(header.lang || ('module' + id)).split('_')[0];
@@ -115,14 +180,20 @@ for (const { id, dict } of dicts) {
     if (JSON.stringify(dict[k]) !== JSON.stringify(repaired[repairDeep(k)])) damagedValues++;
   }
   if (damagedKeys || damagedValues) {
-    console.log('  [BROKEN]  double-encoded text: ' + damagedValues + ' translation(s), ' +
-                damagedKeys + ' source phrase(s)');
+    // If the whole file was transcoded, this is an artefact of the copy in
+    // front of us, not a defect in the translations. Say so rather than
+    // reporting a fault the client cannot act on.
+    const artefact = prov.outDict > 0;
+    console.log('  ' + (artefact ? '[copy]   ' : '[BROKEN] ') +
+                ' double-encoded text: ' + damagedValues + ' translation(s), ' +
+                damagedKeys + ' source phrase(s)' +
+                (artefact ? '  (from the file-wide transcode above, not the data)' : ''));
     const sample = Object.keys(dict).find(k => JSON.stringify(dict[k]) !== JSON.stringify(repaired[repairDeep(k)]));
     if (sample) {
       console.log('            e.g. ' + JSON.stringify(String(dict[sample][0]).slice(0, 48)));
       console.log('            ->   ' + JSON.stringify(String(repaired[repairDeep(sample)][0]).slice(0, 48)));
     }
-    problems++;
+    if (!artefact) problems++;
   } else {
     console.log('  encoding  OK');
   }

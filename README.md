@@ -4,8 +4,16 @@ Adding a language to the Product Selector currently means hand-editing a webpack
 bundle in four separate places. This turns it into: **drop in a JSON file, add one
 line.** No rebuild, no bundle surgery.
 
-It also fixes three defects found in the bundle you sent (details in
-[What the audit found](#what-the-audit-found)).
+Along the way the audit turned up two real defects and one red herring — see
+[What the audit found](#what-the-audit-found).
+
+> **Note on the file this was built against.** The analysis used
+> `unminimised.txt`, a copy put through https://unminify.com/. That tool
+> corrupted every non-ASCII character in the file, so **issue 2 below is about
+> the copy, not about the deployed code.** Issues 1 and 3 are structural and
+> unaffected. The locale JSON in `locales/` was extracted from that copy with
+> the corruption undone, so it should be re-extracted from the real bundle
+> before going live, to be certain it matches character for character.
 
 ---
 
@@ -58,27 +66,44 @@ which is almost certainly why it looked like it "didn't work".
 Its gettext header also declares `nplurals=12`, which is not a valid Polish
 plural rule (Polish has 3 forms). Corrected in `locales/pl.json`.
 
-### 2. Accented text is double-encoded — including English
+### 2. Double-encoded text — *in the unminified copy only*
 
-At some point the translations were saved as UTF-8, read back as Windows-1252,
-and saved as UTF-8 again. The bundle currently contains:
+The `unminimised.txt` supplied for this work is full of double-encoded text
+(`ÃœrÃ¼n Rehberi` instead of `Ürün Rehberi`). **This is an artefact of the
+online unminifier, not a defect in the deployed bundle.**
 
-| language | shown on the site now | should be |
-|---|---|---|
-| en | `You havenâ€™t selected any products` | `You haven’t selected any products` |
-| tr | `ÃœrÃ¼n Rehberi` | `Ürün Rehberi` |
-| tr | `Gezinmeyi DeÄŸiÅŸtir` | `Gezinmeyi Değiştir` |
-| pl | `PrzeÅ‚Ä…cz nawigacjÄ™` | `Przełącz nawigację` |
+The evidence is where the damage sits. It is not confined to the translations —
+it is also in third-party library constants that ship correct from npm and have
+never been near a translation workflow:
 
-33 of 38 Turkish phrases and 25 of 38 Polish phrases are affected. Romanian
-escapes it only because its translations were written without diacritics
-(`Selectie produs`, not `Selecție produs`).
+```
+line 14019: return !!a[t]() || "â€‹Â…" != "â€‹Â…"[t]();      <- core-js trim test
+line 14038: "\t\n\v\f\r  áš€á Žâ€€â€...";                     <- core-js whitespace table
+line  5068: ? "ï¿½"                                             <- U+FFFD replacement char
+line 19767: ellipsis: "â€¦",
+```
 
-**This is why it has to be fixed carefully.** The damage is on *both* sides —
-the dictionary key *and* the English string compiled into the component are both
-mojibake, so they still match each other and the lookup works. Repairing only
-one side breaks it. `tools/patch-bundle.js --fix-encoding` repairs both together,
-and the runtime additionally accepts either spelling so it cannot half-break.
+Those cannot have been damaged by editing translations. The whole file was
+transcoded in one pass — UTF-8 read back as Windows-1252 — which is what
+https://unminify.com/ did to it.
+
+`tools/audit.js` now reports this distinction explicitly:
+
+- damage **inside the dictionaries only** → the translation data really is
+  broken, `--fix-encoding` is appropriate
+- damage **inside *and* outside** → the copy you are auditing was transcoded;
+  go back to the original file and do **not** run `--fix-encoding`
+
+`--fix-encoding` is opt-in and never on by default. It is also safe to run by
+mistake: every repair is gated on a round-trip check, so correctly encoded text
+cannot be altered. `test/noop-on-clean.test.js` asserts exactly this against 25
+real constants taken from this bundle.
+
+One thing to know if the real bundle *ever does* need repairing: the damage
+would be on *both* sides — the dictionary key *and* the English string compiled
+into the component — so they still match each other and lookups keep working.
+Repairing one side alone would break them. `--fix-encoding` does both in one
+pass, and the runtime accepts either spelling regardless.
 
 ### 3. Placeholders dropped in two footer translations
 
@@ -108,8 +133,13 @@ Put `src/ltp-i18n.js` and the `locales/` folder somewhere the site can serve, e.
 **2. Patch the bundle once**
 
 ```bash
-node tools/patch-bundle.js path/to/bundle.js -o path/to/bundle.new.js --fix-encoding
+node tools/patch-bundle.js path/to/bundle.js -o path/to/bundle.new.js
 ```
+
+Run this against the **real deployed bundle**, not a copy that has been through
+an online beautifier — see [issue 2](#2-double-encoded-text--in-the-unminified-copy-only).
+Add `--fix-encoding` only if `tools/audit.js` reports damage confined to the
+dictionaries.
 
 This rewrites the locale map to:
 
@@ -124,8 +154,7 @@ The module numbers are read out of the bundle, not hard-coded, so this still
 works if the app is ever rebuilt and the modules are renumbered. It works on the
 minified bundle as well as the readable one.
 
-Drop `--fix-encoding` if you would rather leave the existing text exactly as it
-is and only add the hook.
+The hook alone changes no text at all.
 
 **3. Load the runtime before the bundle**
 
@@ -197,6 +226,7 @@ the rule and the declared `nplurals` disagree — which is what catches the
 | `node tools/patch-bundle.js <bundle.js> -o out.js [--fix-encoding] [--dry-run]` | applies the one-line hook |
 | `node test/verify.js <bundle.js>` | static checks: wiring, unwired dictionaries, fallback behaviour |
 | `node test/mojibake.test.js` | unit tests for the encoding repair, including strings that must **not** change |
+| `node test/noop-on-clean.test.js` | asserts the repair leaves correctly-encoded text untouched |
 | `python3 test/browser-verify.py <patched-bundle.js>` | loads the patched bundle in a real browser and proves a new language resolves through the app's own Provider |
 
 ### Verification
@@ -231,6 +261,8 @@ the rule and the declared `nplurals` disagree — which is what catches the
 It passes against both a bundle patched with `--fix-encoding` and one patched
 without it, which is what demonstrates that the encoding repair and the language
 mechanism are independent and neither can half-break the other.
+
+The language mechanism does not depend on the encoding question either way.
 
 ---
 
