@@ -7,13 +7,12 @@ line.** No rebuild, no bundle surgery.
 Along the way the audit turned up two real defects and one red herring — see
 [What the audit found](#what-the-audit-found).
 
-> **Note on the file this was built against.** The analysis used
-> `unminimised.txt`, a copy put through https://unminify.com/. That tool
-> corrupted every non-ASCII character in the file, so **issue 2 below is about
-> the copy, not about the deployed code.** Issues 1 and 3 are structural and
-> unaffected. The locale JSON in `locales/` was extracted from that copy with
-> the corruption undone, so it should be re-extracted from the real bundle
-> before going live, to be certain it matches character for character.
+> **Encoding note.** The first analysis used `unminimised.txt`, a copy put
+> through https://unminify.com/. That tool corrupted every non-ASCII character
+> in the file. The **deployed bundle is clean** — verified directly against
+> `https://ltp-productguide.co.uk/main.33ab3e17f8ae6a9cd05f.js`: strict UTF-8,
+> zero mojibake sequences, `Ürün Rehberi` and `Başla` stored correctly. Issue 2
+> below is about the copy, not the site. Issues 1 and 3 are structural and real.
 
 ---
 
@@ -123,7 +122,43 @@ invented replacements — they need a word from whoever supplies the translation
 
 ---
 
-## Installing
+## Installing — the one-file route (recommended)
+
+Build a drop-in replacement for `main.<hash>.js`:
+
+```bash
+node tools/build.js main.33ab3e17f8ae6a9cd05f.js \
+     -o dist/main.33ab3e17f8ae6a9cd05f.js \
+     locales/pl.json
+```
+
+Upload the result over the existing file. Nothing else changes — same filename,
+no extra `<script>` tags, no JSON files to host, no template edits. The output
+is the original bundle with the runtime and an editable `LANGUAGES` block
+prepended.
+
+To add a language later, edit the `LANGUAGES` block at the top of that file, or
+re-run the build with another `locales/*.json`.
+
+**Cache:** the file is served with `cache-control: public, max-age=604800`, so
+purge the cache (or hard-refresh) after uploading, otherwise browsers keep the
+old copy for up to a week.
+
+**Verify before uploading:**
+
+```bash
+node test/diff-check.js original.js dist/main.<hash>.js   # what actually changed
+python3 test/verify-build.py dist/main.<hash>.js          # does it work
+```
+
+`diff-check` confirms the application itself changed by exactly one statement —
+41 bytes removed, 159 added, every other byte identical.
+
+---
+
+## Installing — the modular route
+
+Use this if you would rather keep translations as separate files on the server.
 
 **1. Publish the runtime and the locale files**
 
@@ -221,13 +256,16 @@ the rule and the declared `nplurals` disagree — which is what catches the
 
 | command | what it does |
 |---|---|
-| `node tools/audit.js <bundle.js>` | reports wiring, encoding, plural rules, coverage and placeholder mismatches per language. Non-zero exit if anything is broken. |
+| `node tools/build.js <bundle.js> -o <out.js> [locale.json ...]` | **the main one** — produces the single drop-in replacement |
+| `node tools/audit.js <bundle.js>` | reports wiring, encoding provenance, plural rules, coverage and placeholder mismatches per language |
 | `node tools/extract-locales.js <bundle.js> -d locales/` | writes every dictionary in the bundle out to JSON, repairing encoding and correcting known-bad plural rules |
 | `node tools/patch-bundle.js <bundle.js> -o out.js [--fix-encoding] [--dry-run]` | applies the one-line hook |
 | `node test/verify.js <bundle.js>` | static checks: wiring, unwired dictionaries, fallback behaviour |
 | `node test/mojibake.test.js` | unit tests for the encoding repair, including strings that must **not** change |
 | `node test/noop-on-clean.test.js` | asserts the repair leaves correctly-encoded text untouched |
-| `python3 test/browser-verify.py <patched-bundle.js>` | loads the patched bundle in a real browser and proves a new language resolves through the app's own Provider |
+| `python3 test/verify-build.py <built.js>` | loads the single file in a real browser, switches languages through the app's own UI |
+| `node test/diff-check.js <original.js> <built.js>` | shows exactly which bytes of the application changed |
+| `python3 test/browser-verify.py <patched-bundle.js>` | same, for the modular route |
 
 ### Verification
 

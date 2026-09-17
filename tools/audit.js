@@ -19,6 +19,7 @@
 const fs = require('fs');
 const path = require('path');
 const { repairTree, repairDeep } = require('./lib/mojibake');
+const B = require('./lib/bundle');
 
 function die(msg) { console.error('ERROR: ' + msg); process.exit(1); }
 
@@ -49,35 +50,24 @@ if (!fs.existsSync(input)) die('no such file: ' + input);
 const source = fs.readFileSync(input, 'utf8');
 
 // --------------------------------------------------------------- module array
-const a = source.indexOf('})([');
-const b = source.lastIndexOf(']);');
-if (a < 0 || b < 0) die('this does not look like the Product Selector webpack bundle');
-let mods;
-try { mods = eval('(' + source.slice(a + 3, b + 1) + ')'); }
-catch (e) { die('could not read the module array: ' + e.message); }
+const loaded = B.loadModules(source);
+if (!loaded) die('this does not look like the Product Selector webpack bundle');
+const mods = loaded.modules;
 
 // ------------------------------------------------------- which are wired up?
-const mapMatch = /\{\s*en\s*:\s*([\w$]+)\.default\s*,\s*ro\s*:\s*([\w$]+)\.default\s*,\s*tr\s*:\s*([\w$]+)\.default\s*\}/.exec(source);
+const localeMap = B.findLocaleMap(source);
 const wired = new Set();
-if (mapMatch) {
-  for (const varName of [mapMatch[1], mapMatch[2], mapMatch[3]]) {
-    const w = new RegExp(varName + '\\s*=\\s*[\\w$]+\\(\\s*n\\(\\s*(\\d+)\\s*\\)\\s*\\)').exec(source);
-    if (!w) continue;
-    const body = mods[Number(w[1])] ? mods[Number(w[1])].toString() : '';
-    const ids = Array.from(body.matchAll(/n\(\s*(\d+)\s*\)/g)).map(x => Number(x[1]));
-    if (ids.length) wired.add(ids[ids.length - 1]);
+if (localeMap) {
+  for (const e of localeMap.entries) {
+    const wid = B.wrapperIdFor(source, e.expr);
+    if (wid === null) continue;
+    const ids = B.requiresOf(mods[wid].toString());
+    if (ids.length) wired.add(ids[ids.length - 1]);   // dictionary is the last require
   }
 }
 
 // ------------------------------------------------------------- dictionaries
-const dicts = [];
-for (let id = 0; id < mods.length; id++) {
-  const src = mods[id].toString();
-  if (!/t\.exports\s*=\s*\{/.test(src) || !/"":\s*\{/.test(src)) continue;
-  const m = { exports: {} };
-  try { eval('(' + src + ')')(m, m.exports, () => ({})); } catch (e) { continue; }
-  if (m.exports && m.exports['']) dicts.push({ id, dict: m.exports });
-}
+const dicts = B.findDictionaries(source).map(d => ({ id: d.id, dict: d.dict }));
 if (!dicts.length) die('no translation dictionaries found');
 
 const english = dicts.find(d => String((d.dict[''] || {}).lang || '').indexOf('en') === 0);
@@ -101,34 +91,38 @@ console.log('       ' + mods.length + ' modules, ' + dicts.length + ' translatio
 //
 // Only damage confined to the dictionaries means the translation data itself
 // is wrong.
+function stringLiterals(text) {
+  // double- and single-quoted literals, escapes respected
+  return (text.match(/"(?:[^"\\\n]|\\.)*"|'(?:[^'\\\n]|\\.)*'/g) || []);
+}
+
 function encodingProvenance(source, dictModuleIds) {
-  const dictSrc = new Set(dictModuleIds.map(id => mods[id].toString()));
-  const lines = source.split(/\r?\n/);
-  const isDictLine = (() => {
-    const ranges = [];
-    for (const body of dictSrc) {
-      const at = source.indexOf(body);
-      if (at < 0) continue;
-      const start = source.slice(0, at).split('\n').length;
-      ranges.push([start, start + body.split('\n').length]);
-    }
-    return ln => ranges.some(([a, b]) => ln >= a && ln <= b);
-  })();
+  // Classify by MODULE, not by line: the minified bundle is a single line, so
+  // any line-based split would lump everything together.
+  //
+  // Detection reuses repairDeep(), which only reports a change when the text
+  // round-trips as genuine mojibake. An ad-hoc byte scan false-positives on
+  // correctly encoded text - two adjacent accented characters such as the
+  // "l-slash" + "a-ogonek" in "Przelacz" look like a lead-byte pair but are not.
+  const dictSet = new Set(dictModuleIds);
+  const sources = B.moduleSources(source);
 
   let inDict = 0, outDict = 0;
   const samples = [];
-  lines.forEach((l, i) => {
-    const b = Buffer.from(l, 'utf8');
-    let n = 0;
-    for (let k = 0; k < b.length - 3; k++) {
-      if (b[k] === 0xC3 && (b[k + 1] === 0x82 || b[k + 1] === 0x83)) n++;
-      else if ((b[k] === 0xC4 || b[k] === 0xC5) && b[k + 1] >= 0x80 && b[k + 1] <= 0xBF &&
-               b[k + 2] >= 0xC2 && b[k + 2] <= 0xC5) n++;
+  for (let id = 0; id < sources.length; id++) {
+    for (const lit of stringLiterals(sources[id])) {
+      const body = lit.slice(1, -1);
+      if (!/[^\x00-\x7F]/.test(body)) continue;
+      if (repairDeep(body) === body) continue;
+      if (dictSet.has(id)) inDict++;
+      else {
+        outDict++;
+        if (samples.length < 4) {
+          samples.push('module ' + id + ': ' + lit.slice(0, 84));
+        }
+      }
     }
-    if (!n) return;
-    if (isDictLine(i + 1)) inDict += n;
-    else { outDict += n; if (samples.length < 4) samples.push('line ' + (i + 1) + ': ' + l.trim().slice(0, 96)); }
-  });
+  }
   return { inDict, outDict, samples };
 }
 

@@ -2,3 +2,4 @@
 .serve-demo/
 node_modules/
 *.patched.js
+.serve-build/
