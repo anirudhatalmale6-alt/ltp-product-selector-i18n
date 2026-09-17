@@ -1,0 +1,217 @@
+{
+  "_readme": [
+    "Copy this file to <code>.json (e.g. de.json, fr.json, es.json) and fill it in.",
+    "Only `code` and `messages` are required. Everything else is optional.",
+    "",
+    "messages:",
+    "  The key is the ENGLISH string exactly as it appears in the interface.",
+    "  The value is an ARRAY - [singular] or [singular, plural, ...] - with as",
+    "  many entries as the plural rule declares in nplurals.",
+    "  The \"\" entry is the gettext header and must stay.",
+    "",
+    "date:",
+    "  Optional. Leave it out and dates keep English month/day names while",
+    "  numbers and order stay correct. Fill it in to localise them.",
+    "",
+    "formats:",
+    "  Optional. Defaults are the same as the built-in languages."
+  ],
+  "code": "xx",
+  "name": "Language name in English",
+  "messages": {
+    "": {
+      "domain": "messages",
+      "plural_forms": "nplurals=2; plural=(n != 1);",
+      "lang": "xx"
+    },
+    "Toggle navigation": [
+      ""
+    ],
+    "Go back": [
+      ""
+    ],
+    "Start again": [
+      ""
+    ],
+    "My choices": [
+      ""
+    ],
+    "Browse all": [
+      ""
+    ],
+    "Language": [
+      ""
+    ],
+    "All Products": [
+      ""
+    ],
+    "{0} products": [
+      ""
+    ],
+    "Product Options": [
+      ""
+    ],
+    "Your {0} surface": [
+      ""
+    ],
+    "Email sent successfully": [
+      ""
+    ],
+    "Here are your choices": [
+      ""
+    ],
+    "Your Choices": [
+      ""
+    ],
+    "Email your choices": [
+      ""
+    ],
+    "Enter your email address here": [
+      ""
+    ],
+    "Send": [
+      ""
+    ],
+    "You haven't selected any products": [
+      ""
+    ],
+    "Back to start": [
+      ""
+    ],
+    "The Symptoms": [
+      ""
+    ],
+    "Choosing {0} for your {1} surface": [
+      ""
+    ],
+    "Alternative products available": [
+      ""
+    ],
+    "Your surface": [
+      ""
+    ],
+    "Your selections for {0}": [
+      ""
+    ],
+    "Your selection": [
+      ""
+    ],
+    "Download technical data sheet": [
+      ""
+    ],
+    "View your choices": [
+      ""
+    ],
+    "Add to my choices": [
+      ""
+    ],
+    "Choose {0} for this": [
+      ""
+    ],
+    "Use": [
+      ""
+    ],
+    "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+      ""
+    ],
+    "No matches available": [
+      ""
+    ],
+    "Product Selector": [
+      ""
+    ],
+    "Press Start": [
+      ""
+    ],
+    "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
+      ""
+    ],
+    "Choose a Surface": [
+      ""
+    ],
+    "What type of surface do you have?": [
+      ""
+    ],
+    "Back to top": [
+      ""
+    ]
+  },
+  "date": {
+    "months": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "monthsShort": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "weekdays": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "weekdaysShort": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "weekdaysMin": [
+      "",
+      "",
+      "",
+      "",
+      "",
+      "",
+      ""
+    ],
+    "meridiem": {
+      "A": [
+        "AM",
+        "PM"
+      ],
+      "a": [
+        "am",
+        "pm"
+      ],
+      "aa": [
+        "a.m.",
+        "p.m."
+      ]
+    },
+    "ordinal": "."
+  },
+  "formats": {
+    "time": "HH:mm",
+    "date": "DD.MM.YYYY",
+    "dateTime": "DD.MM.YYYY HH:mm",
+    "humanizedDate": "DD MMMM YYYY"
+  }
+}

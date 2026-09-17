@@ -1,0 +1,126 @@
+{
+  "code": "tr",
+  "name": "tr",
+  "messages": {
+    "": {
+      "domain": "messages",
+      "plural_forms": "nplurals=2; plural=(n != 1);",
+      "lang": "tr"
+    },
+    "Toggle navigation": [
+      "Gezinmeyi Değiştir"
+    ],
+    "Go back": [
+      "Geri"
+    ],
+    "Start again": [
+      "Tekrar başla"
+    ],
+    "My choices": [
+      "Seçimlerim"
+    ],
+    "Browse all": [
+      "Tüm Ürünler"
+    ],
+    "Language": [
+      "Dil"
+    ],
+    "All Products": [
+      "Tüm Ürünler"
+    ],
+    "{0} products": [
+      "{0} Ürün"
+    ],
+    "Product Options": [
+      "Ürün Seçenekleri"
+    ],
+    "Your {0} surface": [
+      "{0} Zeminler"
+    ],
+    "Email sent successfully": [
+      "E-posta başarı ile gönderildi"
+    ],
+    "Here are your choices": [
+      "Seçtiğiniz Ürünler"
+    ],
+    "Your Choices": [
+      "Seçtikleriniz"
+    ],
+    "Email your choices": [
+      "Seçtiklerinizi E-posta ile gönderin"
+    ],
+    "Enter your email address here": [
+      "E-posta adersinizi girin"
+    ],
+    "Send": [
+      "Gönder"
+    ],
+    "You haven't selected any products": [
+      "Ürün Seçimi yapmadınız"
+    ],
+    "Back to start": [
+      "Başa dön"
+    ],
+    "The Symptoms": [
+      "Problemler"
+    ],
+    "Choosing {0} for your {1} surface": [
+      "{1} Zeminleriniz için {0} seçiniz"
+    ],
+    "Alternative products available": [
+      "Alternatif ürünler mevcuttur"
+    ],
+    "Your surface": [
+      "Zemin Türü"
+    ],
+    "Your selections for {0}": [
+      "{0} için seçiminiz"
+    ],
+    "Your selection": [
+      "Seçiminiz"
+    ],
+    "Download technical data sheet": [
+      "Teknik veri dosyasını indir"
+    ],
+    "View your choices": [
+      "Seçtiğiniz Ürünler"
+    ],
+    "Add to my choices": [
+      "Seçimlerime Ekle"
+    ],
+    "Choose {0} for this": [
+      "Bunun için {0} seçiniz"
+    ],
+    "Use": [
+      "Önerilen ürün"
+    ],
+    "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+      "Bu bilgiler garanti edilmeksizin sunulmaktadır. Malzeme, yerel koşulları ve uygulama yapılacak yüzeyleri dikkate alacak şekilde kullanılmalıdır. Sonuçlarından emin olmak adına, ürünü göze çarpmayan bir alanda denenmesi tavsiye edilir."
+    ],
+    "No matches available": [
+      "Eşleşme bulunamadı"
+    ],
+    "Product Selector": [
+      "Ürün Rehberi"
+    ],
+    "Press Start": [
+      "Başla"
+    ],
+    "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
+      "© Telif Hakkı {0} LTP. Her hakkı saklıdır. Şirket Kayıt No. KDV No. {2}"
+    ],
+    "Choose a Surface": [
+      "Zemin tipini seçin"
+    ],
+    "What type of surface do you have?": [
+      "Ne tip bir yüzeyiniz var?"
+    ],
+    "Loading...": [
+      "Yükleniyor…"
+    ],
+    "Back to top": [
+      "Yukaraya dön"
+    ]
+  },
+  "_note": "Extracted from bundle.js module 624."
+}
