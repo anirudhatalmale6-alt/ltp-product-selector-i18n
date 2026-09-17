@@ -225,12 +225,43 @@ no translations behind it.
 
 ## Adding a language after that
 
-1. `cp locales/_template.json locales/de.json`
-2. Fill in `code`, the `messages` values, and the `plural_forms` header.
-3. Add `de: {}` to the `locales` block in step 3 above.
+The quickest route is the translator sheet, because it checks the result:
 
-That is the whole process. Nothing is compiled and the bundle is not touched
+```bash
+# 1. make a sheet for the translator (or start from an existing language)
+node tools/make-sheet.js main.<hash>.js -o german.csv
+node tools/make-sheet.js main.<hash>.js -o polish.csv --from locales/pl.json
+
+# 2. they fill in column B only, and send it back
+
+# 3. convert it, with checks
+node tools/sheet-to-locale.js german.csv --code de --name German -o locales/de.json
+
+# 4. rebuild
+node tools/build.js main.<hash>.js -o dist/main.<hash>.js locales/pl.json locales/de.json
+```
+
+`locales/translation-sheet-blank.csv` is a ready-made blank. Column A is the
+English the app asks for, column B is the translation, column C lists any
+`{0}`/`{1}` markers that must survive, column D flags the three phrases that
+are translatable but absent from the English dictionary.
+
+Step 3 refuses to write the file if a translation drops a placeholder or
+invents one, and warns about blanks. Run against the *existing* Romanian and
+Turkish it reports exactly the two footer faults in
+[issue 3](#3-placeholders-dropped-in-two-footer-translations) — which is the
+point: these mistakes are easy to make and invisible once shipped.
+
+Or edit JSON by hand: `cp locales/_template.json locales/de.json`, fill it in,
+and pass it to `build.js`. Nothing is compiled and the bundle is never touched
 again.
+
+### Which phrases actually need translating?
+
+Not just the English dictionary. English falls through to the source string, so
+a phrase can be live in other languages while absent from `en` — `Loading...`
+is in `ro`, `tr` and `pl` but not in `en`. `make-sheet.js` uses the union of
+every dictionary (40 phrases, against 37 in `en`) so nothing is missed.
 
 The keys in `messages` are the English strings exactly as they appear in the
 interface — `tools/extract-locales.js` writes out a correct, complete set from
@@ -257,6 +288,8 @@ the rule and the declared `nplurals` disagree — which is what catches the
 | command | what it does |
 |---|---|
 | `node tools/build.js <bundle.js> -o <out.js> [locale.json ...]` | **the main one** — produces the single drop-in replacement |
+| `node tools/make-sheet.js <bundle.js> -o sheet.csv [--from locale.json]` | a spreadsheet for the translator to fill in |
+| `node tools/sheet-to-locale.js <sheet.csv> --code xx --name Name -o locale.json` | converts it back, refusing broken placeholders |
 | `node tools/audit.js <bundle.js>` | reports wiring, encoding provenance, plural rules, coverage and placeholder mismatches per language |
 | `node tools/extract-locales.js <bundle.js> -d locales/` | writes every dictionary in the bundle out to JSON, repairing encoding and correcting known-bad plural rules |
 | `node tools/patch-bundle.js <bundle.js> -o out.js [--fix-encoding] [--dry-run]` | applies the one-line hook |
