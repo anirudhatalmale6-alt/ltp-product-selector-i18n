@@ -47,7 +47,7 @@ const code = opt('--code');
 const name = opt('--name');
 const output = opt('-o');
 const input = argv.filter((a, i) => !a.startsWith('-') &&
-  !['--code', '--name', '-o', '--column'].some(f => argv.indexOf(f) !== -1 && i === argv.indexOf(f) + 1))[0];
+  !['--code', '--name', '-o', '--column', '--alias'].some(f => argv.indexOf(f) !== -1 && i === argv.indexOf(f) + 1))[0];
 
 if (!input || !code || !output) {
   die('usage: node tools/sheet-to-locale.js <sheet.csv> --code <xx> --name <Name> -o <out.json>');
@@ -146,7 +146,10 @@ if (fatal) {
   process.exit(1);
 }
 
-const out = { code, name: name || code, messages };
+const out = { code, name: name || code };
+if (argv.indexOf('--override') !== -1) out.override = true;
+if (opt('--alias')) out.alias = String(opt('--alias')).split(',').map(x => x.trim()).filter(Boolean);
+out.messages = messages;
 fs.mkdirSync(path.dirname(path.resolve(output)), { recursive: true });
 fs.writeFileSync(output, JSON.stringify(out, null, 2) + '\n');
 console.log('\n  output  : ' + path.resolve(output));

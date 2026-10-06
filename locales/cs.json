@@ -1,131 +1,131 @@
 {
-  "code": "pl",
-  "name": "Polish",
+  "code": "cs",
+  "name": "Czech",
   "messages": {
     "Toggle navigation": [
-      "Nawigacja przełączana"
+      "Přepínačka navigace"
     ],
     "Go back": [
-      "Wróć"
+      "Vrať se"
     ],
     "Start again": [
-      "Zacznij od nowa"
+      "Začni znovu"
     ],
     "My choices": [
-      "Moje wybory"
+      "Moje volby"
     ],
     "Browse all": [
-      "Przeglądaj wszystko"
+      "Procházet vše"
     ],
     "Language": [
-      "Język"
+      "Jazyk"
     ],
     "All Products": [
-      "Wszystkie produkty"
+      "Všechny produkty"
     ],
     "{0} products": [
       "{0} produkty"
     ],
     "Product Options": [
-      "Opcje produktowe"
+      "Možnosti produktů"
     ],
     "Your {0} surface": [
-      "Twoja {0} powierzchnia"
+      "Tvůj {0} povrch"
     ],
     "Email sent successfully": [
-      "E-mail wysłany pomyślnie"
+      "E-mail úspěšně odeslán"
     ],
     "Here are your choices": [
-      "Oto Twoje opcje"
+      "Tady jsou vaše možnosti"
     ],
     "Your Choices": [
-      "Twoje wybory"
+      "Vaše volby"
     ],
     "Email your choices": [
-      "Wyślij swoje wybory mailem"
+      "Pošlete své volby e-mailem"
     ],
     "Enter your email address here": [
-      "Wpisz tutaj swój adres e-mail"
+      "Zadejte zde svou e-mailovou adresu"
     ],
     "Send": [
-      "Wyślij"
+      "Odesílat"
     ],
     "You haven't selected any products": [
-      "Nie wybrałeś żadnych produktów"
+      "Nevybral jste žádné produkty"
     ],
     "Back to start": [
-      "Wracając do początku"
+      "Zpět na začátek"
     ],
     "The Symptoms": [
-      "Objawy"
+      "Příznaky"
     ],
     "Choosing {0} for your {1} surface": [
-      "Wybór {0} dla powierzchni {1}"
+      "Volba {0} pro váš {1} povrch"
     ],
     "Alternative products available": [
-      "Dostępne produkty alternatywne"
+      "Alternativní produkty dostupné"
     ],
     "Your surface": [
-      "Twoja powierzchnia"
+      "Tvůj povrch"
     ],
     "Your selections for {0}": [
-      "Jakie są twoje wybory do {0}"
+      "Vaše volby pro {0}"
     ],
     "Your selection": [
-      "Twój wybór"
+      "Váš výběr"
     ],
     "Download technical data sheet": [
-      "Pobierz kartę techniczną"
+      "Stáhněte si technický technický list"
     ],
     "View your choices": [
-      "Zobacz swoje wybory"
+      "Zobrazit své možnosti"
     ],
     "Add to my choices": [
-      "Dodaj do moich wyborów"
+      "Přidejte k mým možnostem"
     ],
     "Choose {0} for this": [
-      "Wybierz {0} do tego"
+      "Vyberte {0} pro toto"
     ],
     "Use": [
-      "Zastosowanie"
+      "Použití"
     ],
     "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
-      "Prosimy pamiętać, że te informacje są dostępne wyłącznie jako ogólne wskazówki i bez gwarancji. Twoja konkretna sytuacja może wymagać alternatywnego podejścia. W razie wątpliwości każdy proces należy wypróbować w niepozornym miejscu przed ogólnym zastosowaniem."
+      "Upozorňujeme, že tyto informace jsou poskytovány pouze jako obecné pokyny a bez záruky. Vaše konkrétní situace může vyžadovat alternativní přístup. V případě pochybností by měl být jakýkoli proces vyzkoušen na nenápadném místě před běžnou aplikací."
     ],
     "No matches available": [
-      "Brak dostępnych zapałek"
+      "Nejsou k dispozici žádné zápasy"
     ],
     "Product Selector": [
-      "Selektor produktów"
+      "Výběrový systém"
     ],
     "Press Start": [
-      "Start prasowy"
+      "Press Start"
     ],
     "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
-      "© Prawa autorskie {0} LTP. Wszelkie prawa zastrzeżone. Numer rejestracyjny firmy. {1}. Numer VAT {2}"
+      "© Copyright {0} LTP. Všechna práva vyhrazena. Registrační číslo společnosti {1}. DPH č. {2}"
     ],
     "Choose a Surface": [
-      "Wybierz powierzchnię"
+      "Vyberte si povrch"
     ],
     "What type of surface do you have?": [
-      "Jaki masz rodzaj powierzchni?"
+      "Jaký typ povrchu máte?"
     ],
     "Back to top": [
-      "Powrót na górę"
+      "Zpět nahoru"
     ],
     "Your LTP Product Selector choices": [
-      "Twoje wybory do wyboru produktów LTP"
+      "Vaše volby LTP produktového výběrového modulu"
     ],
     "{0} added to your choices.": [
-      "{0} dodane do twojego wyboru."
+      "{0} přidáno k vašim možnostem."
     ],
     "Loading...": [
-      "Ładowanie..."
+      "Načítám..."
     ],
     "": {
       "domain": "messages",
-      "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);",
-      "lang": "pl"
+      "plural_forms": "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;",
+      "lang": "cs"
     }
   }
 }

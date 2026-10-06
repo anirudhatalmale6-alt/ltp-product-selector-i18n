@@ -362,20 +362,44 @@
         };
       }
       var map = assign({}, builtIn);
-      var added = [];
+      var added = [], replaced = [];
       for (var code in config.locales) {
         if (!Object.prototype.hasOwnProperty.call(config.locales, code)) continue;
+        var def = config.locales[code];
         if (map[code]) {
-          warn('locale "' + code + '" is already built into the bundle - ' +
-               'the built-in version wins. Remove it from configure() or rebuild the bundle without it.');
-          continue;
+          // Replacing a language compiled into the bundle is a deliberate act -
+          // it silently changes text that already works - so it has to be asked
+          // for explicitly rather than happening by accident.
+          if (!def || def.override !== true) {
+            warn('locale "' + code + '" is already built into the bundle, so the built-in ' +
+                 'version wins and the one supplied here is ignored. ' +
+                 'Set override: true if you mean to replace it.');
+            continue;
+          }
+          replaced.push(code);
+        } else {
+          added.push(code);
         }
-        map[code] = loaderFor(code, config.locales[code]);
-        added.push(code);
+        var loader = loaderFor(code, def);
+        map[code] = loader;
+
+        // Alternate codes for the same language. Greek is "el" in ISO 639-1 but
+        // some systems label it "gr" (which is really the country code), and
+        // codes are sometimes cased differently. Registering both costs nothing
+        // and means the language works whichever one the API sends.
+        var aliases = def && def.alias ? [].concat(def.alias) : [];
+        for (var a = 0; a < aliases.length; a++) {
+          var alt = aliases[a];
+          if (!alt || map[alt]) continue;
+          map[alt] = loader;
+          added.push(alt + ' (alias of ' + code + ')');
+        }
       }
       LTPI18n._map = map;
+      LTPI18n._replaced = replaced;
       info('locale map: built-in [' + Object.keys(builtIn).join(', ') + ']' +
-           (added.length ? ', added [' + added.join(', ') + ']' : ', nothing added'));
+           (added.length ? ', added [' + added.join(', ') + ']' : ', nothing added') +
+           (replaced.length ? ', REPLACED [' + replaced.join(', ') + ']' : ''));
       return map;
     },
 
@@ -427,75 +451,583 @@
 LTPI18n.configure({
   debug: false,
   locales: {
-    "pl": {
+    "ro": {
       "messages": {
+        "Toggle navigation": ["Comută navigarea"],
+        "Go back": ["Întoarce-te"],
+        "Start again": ["Începe din nou"],
+        "My choices": ["Alegerile mele"],
+        "Browse all": ["Răsfoiește toate"],
+        "Language": ["Limbă"],
+        "All Products": ["Toate produsele"],
+        "{0} products": ["{0} produse"],
+        "Product Options": ["Opțiuni de produs"],
+        "Your {0} surface": ["Suprafața {0} ta"],
+        "Email sent successfully": ["Email trimis cu succes"],
+        "Here are your choices": ["Iată opțiunile tale"],
+        "Your Choices": ["Alegerile tale"],
+        "Email your choices": ["Trimite-ți opțiunile pe email"],
+        "Enter your email address here": ["Introdu-ți adresa de email aici"],
+        "Send": ["Trimite"],
+        "You haven't selected any products": ["Nu ai ales niciun produs"],
+        "Back to start": ["Înapoi la început"],
+        "The Symptoms": ["Simptomele"],
+        "Choosing {0} for your {1} surface": ["Alegerea {0} pentru suprafața {1} ta"],
+        "Alternative products available": ["Produse alternative disponibile"],
+        "Your surface": ["Suprafața ta"],
+        "Your selections for {0}": ["Selecțiile tale pentru {0}"],
+        "Your selection": ["Selecția ta"],
+        "Download technical data sheet": ["Descarcă fișa tehnică"],
+        "View your choices": ["Vizualizează-ți alegerile"],
+        "Add to my choices": ["Adaugă la opțiunile mele"],
+        "Choose {0} for this": ["Alege {0} pentru asta"],
+        "Use": ["Utilizare"],
+        "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+          "Vă rugăm să rețineți că aceste informații sunt oferite doar ca îndrumare generală și fără garanție. Circumstanțele dumneavoastră specifice pot necesita o abordare alternativă. În caz de îndoială, orice proces ar trebui încercat într-o zonă discretă înainte de aplicare generală."
+        ],
+        "No matches available": ["Nu sunt disponibile meciuri"],
+        "Product Selector": ["Selector de produse"],
+        "Press Start": ["Apasă Start"],
+        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
+          "© Drepturi de autor {0} LTP. Toate drepturile rezervate. Nr. înregistrare a companiei {1}. TVA nr. {2}"
+        ],
+        "Choose a Surface": ["Alege o suprafață"],
+        "What type of surface do you have?": ["Ce tip de suprafață ai?"],
+        "Back to top": ["Înapoi sus"],
+        "Your LTP Product Selector choices": ["Alegerile tale pentru selectorul de produse LTP"],
+        "{0} added to your choices.": ["{0} adăugat la opțiunile tale."],
+        "Loading...": ["Se încarcă..."],
         "": {
           "domain": "messages",
-          "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);",
-          "lang": "pl"
-        },
-        "Toggle navigation": ["Przełącz nawigację"],
-        "Go back": ["Wracać"],
+          "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n==0 || (n!=1 && n%100>=1 && n%100<=19) ? 1 : 2);",
+          "lang": "ro"
+        }
+      },
+      "override": true
+    },
+    "pl": {
+      "messages": {
+        "Toggle navigation": ["Nawigacja przełączana"],
+        "Go back": ["Wróć"],
         "Start again": ["Zacznij od nowa"],
         "My choices": ["Moje wybory"],
         "Browse all": ["Przeglądaj wszystko"],
         "Language": ["Język"],
         "All Products": ["Wszystkie produkty"],
-        "{0} products": ["{0} produktów"],
-        "Product Options": ["Opcje produktu"],
-        "Your {0} surface": ["Twoja powierzchnia {0}"],
+        "{0} products": ["{0} produkty"],
+        "Product Options": ["Opcje produktowe"],
+        "Your {0} surface": ["Twoja {0} powierzchnia"],
         "Email sent successfully": ["E-mail wysłany pomyślnie"],
-        "Here are your choices": ["Oto dostępne opcje"],
+        "Here are your choices": ["Oto Twoje opcje"],
         "Your Choices": ["Twoje wybory"],
-        "Email your choices": ["Wyślij swoje wybory e-mailem"],
+        "Email your choices": ["Wyślij swoje wybory mailem"],
         "Enter your email address here": ["Wpisz tutaj swój adres e-mail"],
-        "Send": ["Wysłać"],
-        "You haven't selected any products": ["Nie wybrano żadnych produktów."],
-        "Back to start": ["Powrót na początek"],
+        "Send": ["Wyślij"],
+        "You haven't selected any products": ["Nie wybrałeś żadnych produktów"],
+        "Back to start": ["Wracając do początku"],
         "The Symptoms": ["Objawy"],
-        "Choosing {0} for your {1} surface": ["Wybór {0} dla Twojej {1} powierzchni"],
-        "Alternative products available": ["Dostępne są produkty alternatywne"],
+        "Choosing {0} for your {1} surface": ["Wybór {0} dla powierzchni {1}"],
+        "Alternative products available": ["Dostępne produkty alternatywne"],
         "Your surface": ["Twoja powierzchnia"],
-        "Your selections for {0}": ["Twoje wybory dla {0}"],
+        "Your selections for {0}": ["Jakie są twoje wybory do {0}"],
         "Your selection": ["Twój wybór"],
-        "Download technical data sheet": ["Pobierz kartę danych technicznych"],
+        "Download technical data sheet": ["Pobierz kartę techniczną"],
         "View your choices": ["Zobacz swoje wybory"],
         "Add to my choices": ["Dodaj do moich wyborów"],
-        "Choose {0} for this": ["Wybierz {0} dla tej opcji."],
-        "Use": ["Używać"],
+        "Choose {0} for this": ["Wybierz {0} do tego"],
+        "Use": ["Zastosowanie"],
         "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
-          "Należy pamiętać, że niniejsze informacje stanowią jedynie ogólne wskazówki i nie są objęte gwarancją. W konkretnej sytuacji może okazać się konieczne zastosowanie innego podejścia. W razie wątpliwości, przed przystąpieniem do właściwego zastosowania, każdą procedurę należy przetestować w mało widocznym miejscu."
+          "Prosimy pamiętać, że te informacje są dostępne wyłącznie jako ogólne wskazówki i bez gwarancji. Twoja konkretna sytuacja może wymagać alternatywnego podejścia. W razie wątpliwości każdy proces należy wypróbować w niepozornym miejscu przed ogólnym zastosowaniem."
         ],
-        "No matches available": ["Brak dostępnych wyników"],
-        "Product Selector": ["Wybór produktu"],
-        "Press Start": ["Press Start"],
-        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": ["© Copyright {0} LTP. Wszelkie prawa zastrzeżone. Numer rejestracyjny spółki {1}. Numer VAT {2}."],
+        "No matches available": ["Brak dostępnych zapałek"],
+        "Product Selector": ["Selektor produktów"],
+        "Press Start": ["Start prasowy"],
+        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
+          "© Prawa autorskie {0} LTP. Wszelkie prawa zastrzeżone. Numer rejestracyjny firmy. {1}. Numer VAT {2}"
+        ],
         "Choose a Surface": ["Wybierz powierzchnię"],
-        "What type of surface do you have?": ["Jaki rodzaj powierzchni posiadasz?"],
-        "Loading...": ["Załadunek"],
-        "Back to top": ["Powrót na górę"]
-      },
-      "date": {
-        "months": [
-          "stycznia",
-          "lutego",
-          "marca",
-          "kwietnia",
-          "maja",
-          "czerwca",
-          "lipca",
-          "sierpnia",
-          "września",
-          "października",
-          "listopada",
-          "grudnia"
-        ],
-        "monthsShort": ["sty", "lut", "mar", "kwi", "maj", "cze", "lip", "sie", "wrz", "paź", "lis", "gru"],
-        "weekdays": ["niedziela", "poniedziałek", "wtorek", "środa", "czwartek", "piątek", "sobota"],
-        "weekdaysShort": ["niedz", "pon", "wt", "śr", "czw", "pt", "sob"],
-        "weekdaysMin": ["nd", "pn", "wt", "śr", "cz", "pt", "sb"],
-        "ordinal": "."
+        "What type of surface do you have?": ["Jaki masz rodzaj powierzchni?"],
+        "Back to top": ["Powrót na górę"],
+        "Your LTP Product Selector choices": ["Twoje wybory do wyboru produktów LTP"],
+        "{0} added to your choices.": ["{0} dodane do twojego wyboru."],
+        "Loading...": ["Ładowanie..."],
+        "": {
+          "domain": "messages",
+          "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);",
+          "lang": "pl"
+        }
       }
+    },
+    "cs": {
+      "messages": {
+        "Toggle navigation": ["Přepínačka navigace"],
+        "Go back": ["Vrať se"],
+        "Start again": ["Začni znovu"],
+        "My choices": ["Moje volby"],
+        "Browse all": ["Procházet vše"],
+        "Language": ["Jazyk"],
+        "All Products": ["Všechny produkty"],
+        "{0} products": ["{0} produkty"],
+        "Product Options": ["Možnosti produktů"],
+        "Your {0} surface": ["Tvůj {0} povrch"],
+        "Email sent successfully": ["E-mail úspěšně odeslán"],
+        "Here are your choices": ["Tady jsou vaše možnosti"],
+        "Your Choices": ["Vaše volby"],
+        "Email your choices": ["Pošlete své volby e-mailem"],
+        "Enter your email address here": ["Zadejte zde svou e-mailovou adresu"],
+        "Send": ["Odesílat"],
+        "You haven't selected any products": ["Nevybral jste žádné produkty"],
+        "Back to start": ["Zpět na začátek"],
+        "The Symptoms": ["Příznaky"],
+        "Choosing {0} for your {1} surface": ["Volba {0} pro váš {1} povrch"],
+        "Alternative products available": ["Alternativní produkty dostupné"],
+        "Your surface": ["Tvůj povrch"],
+        "Your selections for {0}": ["Vaše volby pro {0}"],
+        "Your selection": ["Váš výběr"],
+        "Download technical data sheet": ["Stáhněte si technický technický list"],
+        "View your choices": ["Zobrazit své možnosti"],
+        "Add to my choices": ["Přidejte k mým možnostem"],
+        "Choose {0} for this": ["Vyberte {0} pro toto"],
+        "Use": ["Použití"],
+        "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+          "Upozorňujeme, že tyto informace jsou poskytovány pouze jako obecné pokyny a bez záruky. Vaše konkrétní situace může vyžadovat alternativní přístup. V případě pochybností by měl být jakýkoli proces vyzkoušen na nenápadném místě před běžnou aplikací."
+        ],
+        "No matches available": ["Nejsou k dispozici žádné zápasy"],
+        "Product Selector": ["Výběrový systém"],
+        "Press Start": ["Press Start"],
+        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": ["© Copyright {0} LTP. Všechna práva vyhrazena. Registrační číslo společnosti {1}. DPH č. {2}"],
+        "Choose a Surface": ["Vyberte si povrch"],
+        "What type of surface do you have?": ["Jaký typ povrchu máte?"],
+        "Back to top": ["Zpět nahoru"],
+        "Your LTP Product Selector choices": ["Vaše volby LTP produktového výběrového modulu"],
+        "{0} added to your choices.": ["{0} přidáno k vašim možnostem."],
+        "Loading...": ["Načítám..."],
+        "": {
+          "domain": "messages",
+          "plural_forms": "nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2;",
+          "lang": "cs"
+        }
+      }
+    },
+    "bg": {
+      "messages": {
+        "Toggle navigation": ["Превключване на навигация"],
+        "Go back": ["Върни се"],
+        "Start again": ["Започни отначало"],
+        "My choices": ["Моите избори"],
+        "Browse all": ["Разгледайте всички"],
+        "Language": ["Език"],
+        "All Products": ["Всички продукти"],
+        "{0} products": ["{0} продукти"],
+        "Product Options": ["Продуктови опции"],
+        "Your {0} surface": ["Твоята {0} повърхност"],
+        "Email sent successfully": ["Имейлът е изпратен успешно"],
+        "Here are your choices": ["Ето вашите избори"],
+        "Your Choices": ["Вашите избори"],
+        "Email your choices": ["Изпратете имейл с вашите избори"],
+        "Enter your email address here": ["Въведете вашия имейл адрес тук"],
+        "Send": ["Изпрати"],
+        "You haven't selected any products": ["Не си избрал никакви продукти"],
+        "Back to start": ["Обратно към началото"],
+        "The Symptoms": ["Симптомите"],
+        "Choosing {0} for your {1} surface": ["Избор на {0} за вашата {1} повърхност"],
+        "Alternative products available": ["Алтернативни продукти, налични"],
+        "Your surface": ["Твоята повърхност"],
+        "Your selections for {0}": ["Вашите избори за {0}"],
+        "Your selection": ["Твой избор"],
+        "Download technical data sheet": ["Изтеглете технически технически лист"],
+        "View your choices": ["Вижте избора си"],
+        "Add to my choices": ["Добави към избора си"],
+        "Choose {0} for this": ["Изберете {0} за това"],
+        "Use": ["Употреба"],
+        "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+          "Моля, имайте предвид, че тази информация се предоставя само като общи насоки и без гаранция. Вашите конкретни обстоятелства може да изискват алтернативен подход. В случай на съмнение, всеки процес трябва да бъде изпробван на незабележимо място преди общото приложение."
+        ],
+        "No matches available": ["Няма налични съвпадения"],
+        "Product Selector": ["Продуктов селектор"],
+        "Press Start": ["Натиснете старт"],
+        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
+          "© Авторски права {0} LTP. Всички права запазени. Регистрационен номер на компанията {1}. ДДС No {2}"
+        ],
+        "Choose a Surface": ["Изберете повърхност"],
+        "What type of surface do you have?": ["Какъв тип повърхност имате?"],
+        "Back to top": ["Обратно в началото"],
+        "Your LTP Product Selector choices": ["Вашите избори за избор на продукти за LTP"],
+        "{0} added to your choices.": ["{0} добави към избора ти."],
+        "Loading...": ["Зареждане..."],
+        "": {
+          "domain": "messages",
+          "plural_forms": "nplurals=2; plural=(n != 1);",
+          "lang": "bg"
+        }
+      }
+    },
+    "nl": {
+      "messages": {
+        "Toggle navigation": ["Navigatie wisselen"],
+        "Go back": ["Ga terug"],
+        "Start again": ["Begin opnieuw"],
+        "My choices": ["Mijn keuzes"],
+        "Browse all": ["Bekijk alles"],
+        "Language": ["Taal"],
+        "All Products": ["Alle producten"],
+        "{0} products": ["{0} producten"],
+        "Product Options": ["Productopties"],
+        "Your {0} surface": ["Je {0} oppervlak"],
+        "Email sent successfully": ["E-mail succesvol verzonden"],
+        "Here are your choices": ["Hier zijn je keuzes"],
+        "Your Choices": ["Jouw keuzes"],
+        "Email your choices": ["Mail je keuzes"],
+        "Enter your email address here": ["Voer hier je e-mailadres in"],
+        "Send": ["Verzenden"],
+        "You haven't selected any products": ["Je hebt geen producten geselecteerd"],
+        "Back to start": ["Terug naar het begin"],
+        "The Symptoms": ["De symptomen"],
+        "Choosing {0} for your {1} surface": ["Het kiezen van {0} voor je {1} oppervlak"],
+        "Alternative products available": ["Alternatieve producten beschikbaar"],
+        "Your surface": ["Je oppervlak"],
+        "Your selections for {0}": ["Uw keuzes voor {0}"],
+        "Your selection": ["Jouw keuze"],
+        "Download technical data sheet": ["Download technisch datasheet"],
+        "View your choices": ["Bekijk je keuzes"],
+        "Add to my choices": ["Voeg toe aan mijn keuzes"],
+        "Choose {0} for this": ["Kies hiervoor {0}"],
+        "Use": ["Gebruik"],
+        "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+          "Houd er rekening mee dat deze informatie alleen als algemene richtlijn en zonder garantie wordt aangeboden. Uw specifieke omstandigheden vereisen mogelijk een alternatieve aanpak. Bij twijfel dient elk proces eerst in een onopvallende ruimte te worden uitgeprobeerd voordat het algemeen wordt toegepast."
+        ],
+        "No matches available": ["Geen wedstrijden beschikbaar"],
+        "Product Selector": ["Productselector"],
+        "Press Start": ["Druk op Start"],
+        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": ["© Auteursrecht {0} LTP. Alle rechten voorbehouden. Bedrijfsregistratienummer {1}. BTW-nummer {2}"],
+        "Choose a Surface": ["Kies een oppervlak"],
+        "What type of surface do you have?": ["Wat voor soort oppervlak heb je?"],
+        "Back to top": ["Terug naar boven"],
+        "Your LTP Product Selector choices": ["Uw LTP Product Selector-keuzes"],
+        "{0} added to your choices.": ["{0} toegevoegd aan je keuzes."],
+        "Loading...": ["Laden..."],
+        "": {
+          "domain": "messages",
+          "plural_forms": "nplurals=2; plural=(n != 1);",
+          "lang": "nl"
+        }
+      }
+    },
+    "fr": {
+      "messages": {
+        "Toggle navigation": ["Basculer la navigation"],
+        "Go back": ["Retourne"],
+        "Start again": ["Recommencez"],
+        "My choices": ["Mes choix"],
+        "Browse all": ["Parcourir tout"],
+        "Language": ["Langue"],
+        "All Products": ["Tous les produits"],
+        "{0} products": ["{0} Produits"],
+        "Product Options": ["Options de produits"],
+        "Your {0} surface": ["Votre {0} surface"],
+        "Email sent successfully": ["Email envoyé avec succès"],
+        "Here are your choices": ["Voici vos choix"],
+        "Your Choices": ["Vos choix"],
+        "Email your choices": ["Envoyez vos choix par email"],
+        "Enter your email address here": ["Saisissez votre adresse e-mail ici"],
+        "Send": ["Envoyer"],
+        "You haven't selected any products": ["Vous n'avez choisi aucun produit"],
+        "Back to start": ["Retour au début"],
+        "The Symptoms": ["Les symptômes"],
+        "Choosing {0} for your {1} surface": ["Choisir {0} pour votre {1} surface"],
+        "Alternative products available": ["Produits alternatifs disponibles"],
+        "Your surface": ["Votre surface"],
+        "Your selections for {0}": ["Vos sélections pour {0}"],
+        "Your selection": ["Votre sélection"],
+        "Download technical data sheet": ["Télécharger la fiche technique"],
+        "View your choices": ["Consultez vos choix"],
+        "Add to my choices": ["Ajoutez à mes choix"],
+        "Choose {0} for this": ["Choisissez {0} pour cela"],
+        "Use": ["Utilisation"],
+        "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+          "Veuillez noter que ces informations sont fournies uniquement à titre de guide général et sans garantie. Votre situation spécifique peut nécessiter une approche alternative. En cas de doute, tout procédé doit être testé dans un endroit discret avant la demande générale."
+        ],
+        "No matches available": ["Aucun match disponible"],
+        "Product Selector": ["Sélecteur de produit"],
+        "Press Start": ["Appuyez sur Start"],
+        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
+          "© Droits d'auteur {0} LTP. Tous droits réservés. Numéro d'enregistrement de la société {1}. TVA n° {2}"
+        ],
+        "Choose a Surface": ["Choisir une surface"],
+        "What type of surface do you have?": ["Quel type de surface avez-vous ?"],
+        "Back to top": ["Retour en haut"],
+        "Your LTP Product Selector choices": ["Vos choix de sélection de produits LTP"],
+        "{0} added to your choices.": ["{0} a ajouté à vos choix."],
+        "Loading...": ["Chargement..."],
+        "": {
+          "domain": "messages",
+          "plural_forms": "nplurals=2; plural=(n > 1);",
+          "lang": "fr"
+        }
+      }
+    },
+    "de": {
+      "messages": {
+        "Toggle navigation": ["Toggle Navigation"],
+        "Go back": ["Geh zurück"],
+        "Start again": ["Fang nochmal von vorne an"],
+        "My choices": ["Meine Entscheidungen"],
+        "Browse all": ["Durchstöbern Sie alle"],
+        "Language": ["Sprache"],
+        "All Products": ["Alle Produkte"],
+        "{0} products": ["{0} Produkte"],
+        "Product Options": ["Produktoptionen"],
+        "Your {0} surface": ["Deine {0} Oberfläche"],
+        "Email sent successfully": ["E-Mail erfolgreich gesendet"],
+        "Here are your choices": ["Hier sind deine Optionen"],
+        "Your Choices": ["Deine Entscheidungen"],
+        "Email your choices": ["Senden Sie Ihre Optionen per E-Mail"],
+        "Enter your email address here": ["Geben Sie hier Ihre E-Mail-Adresse ein"],
+        "Send": ["Senden"],
+        "You haven't selected any products": ["Du hast keine Produkte ausgewählt"],
+        "Back to start": ["Zurück zum Start"],
+        "The Symptoms": ["Die Symptome"],
+        "Choosing {0} for your {1} surface": ["Die Wahl {0} für Ihre {1} Oberfläche"],
+        "Alternative products available": ["Alternative Produkte verfügbar"],
+        "Your surface": ["Deine Oberfläche"],
+        "Your selections for {0}": ["Ihre Auswahl für {0}"],
+        "Your selection": ["Deine Auswahl"],
+        "Download technical data sheet": ["Technisches Datenblatt herunterladen"],
+        "View your choices": ["Sieh dir deine Auswahl an"],
+        "Add to my choices": ["Erweitern Sie meine Auswahl"],
+        "Choose {0} for this": ["Wähle {0} dafür"],
+        "Use": ["Verwendung"],
+        "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+          "Bitte beachten Sie, dass diese Informationen nur als allgemeine Anleitung und ohne Garantie angeboten werden. Ihre spezifischen Umstände erfordern möglicherweise einen alternativen Ansatz. Im Zweifelsfall sollte jeder Prozess vor der allgemeinen Anwendung an einem unauffälligen Ort ausprobiert werden."
+        ],
+        "No matches available": ["Keine verfügbaren Spiele"],
+        "Product Selector": ["Produktselektor"],
+        "Press Start": ["Drücken Sie auf Start"],
+        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
+          "© Urheberrecht {0} LTP. Alle Rechte vorbehalten. Firmenregistrierung {1}. Mehrwertsteuernummer. {2}"
+        ],
+        "Choose a Surface": ["Wähle eine Oberfläche"],
+        "What type of surface do you have?": ["Welche Art von Oberfläche hast du?"],
+        "Back to top": ["Zurück nach oben"],
+        "Your LTP Product Selector choices": ["Ihre LTP-Produktauswahl"],
+        "{0} added to your choices.": ["{0} zu deinen Entscheidungen hinzugefügt."],
+        "Loading...": ["Lädt..."],
+        "": {
+          "domain": "messages",
+          "plural_forms": "nplurals=2; plural=(n != 1);",
+          "lang": "de"
+        }
+      }
+    },
+    "it": {
+      "messages": {
+        "Toggle navigation": ["Commuta navigazione"],
+        "Go back": ["Torna indietro"],
+        "Start again": ["Ricomincia"],
+        "My choices": ["Le mie scelte"],
+        "Browse all": ["Sfoglia tutto"],
+        "Language": ["Lingua"],
+        "All Products": ["Tutti i prodotti"],
+        "{0} products": ["{0} Prodotti"],
+        "Product Options": ["Opzioni di prodotto"],
+        "Your {0} surface": ["La tua {0} superficie"],
+        "Email sent successfully": ["Email inviata con successo"],
+        "Here are your choices": ["Ecco le tue scelte"],
+        "Your Choices": ["Le tue scelte"],
+        "Email your choices": ["Invia via email le tue scelte"],
+        "Enter your email address here": ["Inserisci qui il tuo indirizzo email"],
+        "Send": ["Invia"],
+        "You haven't selected any products": ["Non hai selezionato nessun prodotto"],
+        "Back to start": ["Ritorno all'inizio"],
+        "The Symptoms": ["I sintomi"],
+        "Choosing {0} for your {1} surface": ["Scegliere {0} per la tua superficie {1}"],
+        "Alternative products available": ["Prodotti alternativi disponibili"],
+        "Your surface": ["La tua superficie"],
+        "Your selections for {0}": ["Le tue scelte per {0}"],
+        "Your selection": ["La tua scelta"],
+        "Download technical data sheet": ["Scarica la scheda tecnica"],
+        "View your choices": ["Visualizza le tue scelte"],
+        "Add to my choices": ["Aggiungi alle mie scelte"],
+        "Choose {0} for this": ["Scegli {0} per questo"],
+        "Use": ["Utilizzo"],
+        "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+          "Si prega di notare che queste informazioni sono fornite solo come indicazioni generali e senza garanzie. Le tue circostanze specifiche potrebbero richiedere un approccio alternativo. In caso di dubbio, qualsiasi procedura dovrebbe essere sperimentata in un'area discreta prima della domanda generale."
+        ],
+        "No matches available": ["Nessuna partita disponibile"],
+        "Product Selector": ["Selezionatore di prodotto"],
+        "Press Start": ["Premi Start"],
+        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": ["© Copyright {0} LTP. Tutti i diritti riservati. Registrazione della società n. {1}. IVA n. {2}"],
+        "Choose a Surface": ["Scegli una superficie"],
+        "What type of surface do you have?": ["Che tipo di superficie hai?"],
+        "Back to top": ["Torna su"],
+        "Your LTP Product Selector choices": ["Le tue scelte di selettore di prodotto LTP"],
+        "{0} added to your choices.": ["{0} aggiungeva alle tue scelte."],
+        "Loading...": ["Caricamento..."],
+        "": {
+          "domain": "messages",
+          "plural_forms": "nplurals=2; plural=(n != 1);",
+          "lang": "it"
+        }
+      }
+    },
+    "es": {
+      "messages": {
+        "Toggle navigation": ["Alternar navegación"],
+        "Go back": ["Vuelve atrás"],
+        "Start again": ["Empieza de nuevo"],
+        "My choices": ["Mis elecciones"],
+        "Browse all": ["Explora todo"],
+        "Language": ["Idioma"],
+        "All Products": ["Todos los productos"],
+        "{0} products": ["{0} productos"],
+        "Product Options": ["Opciones de producto"],
+        "Your {0} surface": ["Tu {0} superficie"],
+        "Email sent successfully": ["Correo electrónico enviado con éxito"],
+        "Here are your choices": ["Aquí tienes tus opciones"],
+        "Your Choices": ["Tus elecciones"],
+        "Email your choices": ["Envía por correo electrónico tus opciones"],
+        "Enter your email address here": ["Introduce aquí tu dirección de correo electrónico"],
+        "Send": ["Envía"],
+        "You haven't selected any products": ["No has seleccionado ningún producto"],
+        "Back to start": ["Volver al principio"],
+        "The Symptoms": ["Los síntomas"],
+        "Choosing {0} for your {1} surface": ["Elegir {0} para tu superficie {1}"],
+        "Alternative products available": ["Productos alternativos disponibles"],
+        "Your surface": ["Tu superficie"],
+        "Your selections for {0}": ["Tus selecciones para {0}"],
+        "Your selection": ["Tu selección"],
+        "Download technical data sheet": ["Descargar ficha técnica"],
+        "View your choices": ["Consulta tus opciones"],
+        "Add to my choices": ["Suma a mis opciones"],
+        "Choose {0} for this": ["Elige {0} para esto"],
+        "Use": ["Uso"],
+        "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+          "Ten en cuenta que esta información se ofrece solo como orientación general y sin garantía. Tus circunstancias específicas pueden requerir un enfoque alternativo. En caso de duda, cualquier proceso debe probarse en un lugar discreto antes de la solicitud general."
+        ],
+        "No matches available": ["No hay combates disponibles"],
+        "Product Selector": ["Selector de productos"],
+        "Press Start": ["Pulsa Start"],
+        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
+          "© Derechos de autor {0} LTP. Todos los derechos reservados. Número de registro de la empresa {1}. IVA nº {2}"
+        ],
+        "Choose a Surface": ["Elige una superficie"],
+        "What type of surface do you have?": ["¿Qué tipo de superficie tienes?"],
+        "Back to top": ["Volver arriba"],
+        "Your LTP Product Selector choices": ["Tus elecciones de selectores de productos LTP"],
+        "{0} added to your choices.": ["{0} añadió a tus opciones."],
+        "Loading...": ["Cargando..."],
+        "": {
+          "domain": "messages",
+          "plural_forms": "nplurals=2; plural=(n != 1);",
+          "lang": "es"
+        }
+      }
+    },
+    "el": {
+      "messages": {
+        "Toggle navigation": ["Εναλλαγή πλοήγησης"],
+        "Go back": ["Επιστροφή"],
+        "Start again": ["Ξεκινήστε ξανά"],
+        "My choices": ["Οι επιλογές μου"],
+        "Browse all": ["Περιήγηση όλων"],
+        "Language": ["Γλώσσα"],
+        "All Products": ["Ολα τα Προϊόντα"],
+        "{0} products": ["{0} προϊόντα"],
+        "Product Options": ["Επιλογές προϊόντων"],
+        "Your {0} surface": ["Η επιφάνεια {0} σας"],
+        "Email sent successfully": ["Το email στάλθηκε με επιτυχία"],
+        "Here are your choices": ["Εδώ είναι οι επιλογές σας"],
+        "Your Choices": ["Οι επιλογές σας"],
+        "Email your choices": ["Στείλτε με email τις επιλογές σας"],
+        "Enter your email address here": ["Εισαγάγετε τη διεύθυνση email σας εδώ"],
+        "Send": ["Αποστολή"],
+        "You haven't selected any products": ["Δεν έχετε επιλέξει κανένα προϊόν"],
+        "Back to start": ["Επιστροφή στην αρχή"],
+        "The Symptoms": ["Τα συμπτώματα"],
+        "Choosing {0} for your {1} surface": ["Επιλογή {0} για την επιφάνεια {1} σας"],
+        "Alternative products available": ["Διαθέσιμα εναλλακτικά προϊόντα"],
+        "Your surface": ["Η επιφάνειά σας"],
+        "Your selections for {0}": ["Οι επιλογές σας για {0}"],
+        "Your selection": ["Η επιλογή σας"],
+        "Download technical data sheet": ["Λήψη φύλλου τεχνικών δεδομένων"],
+        "View your choices": ["Δείτε τις επιλογές σας"],
+        "Add to my choices": ["Προσθήκη στις επιλογές μου"],
+        "Choose {0} for this": ["Επιλέξτε {0} για αυτό"],
+        "Use": ["Χρήση"],
+        "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+          "Λάβετε υπόψη ότι αυτές οι πληροφορίες προσφέρονται μόνο ως γενική καθοδήγηση και χωρίς εγγύηση. Οι συγκεκριμένες περιστάσεις σας μπορεί να χρειάζονται μια εναλλακτική προσέγγιση. Σε περίπτωση αμφιβολίας, οποιαδήποτε διαδικασία θα πρέπει να δοκιμαστεί σε μια δυσδιάκριτη περιοχή πριν από τη γενική εφαρμογή."
+        ],
+        "No matches available": ["Δεν υπάρχουν διαθέσιμοι αγώνες"],
+        "Product Selector": ["Επιλογέας προϊόντων"],
+        "Press Start": ["Πατήστε Έναρξη"],
+        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
+          "© Πνευματικά δικαιώματα {0} LTP. Ολα τα δικαιώματα διατηρούνται. Αριθμός Μητρώου Εταιρείας {1}. Αριθμός ΦΠΑ {2}"
+        ],
+        "Choose a Surface": ["Επιλέξτε μία επιφάνεια"],
+        "What type of surface do you have?": ["Τι τύπο επιφάνειας έχετε;"],
+        "Back to top": ["Επιστροφή στην κορυφή"],
+        "Your LTP Product Selector choices": ["Οι επιλογές σας για τον Επιλογέα προϊόντων LTP"],
+        "{0} added to your choices.": ["{0} προστεθεί στις επιλογές σας."],
+        "Loading...": ["Φόρτωση..."],
+        "": {
+          "domain": "messages",
+          "plural_forms": "nplurals=2; plural=(n != 1);",
+          "lang": "el"
+        }
+      },
+      "alias": ["gr"]
+    },
+    "hu": {
+      "messages": {
+        "Toggle navigation": ["Navigáció kapcsolója"],
+        "Go back": ["Menj vissza"],
+        "Start again": ["Kezdjük újrakezdeni"],
+        "My choices": ["A döntéseim"],
+        "Browse all": ["Böngésszük mindet"],
+        "Language": ["Nyelv"],
+        "All Products": ["Minden termék"],
+        "{0} products": ["{0} termékek"],
+        "Product Options": ["Termékopciók"],
+        "Your {0} surface": ["A {0} felületed"],
+        "Email sent successfully": ["Sikeresen elküldött e-mail"],
+        "Here are your choices": ["Íme a választásaid"],
+        "Your Choices": ["A te döntéseid"],
+        "Email your choices": ["Küldd el a választásaidat e-mailben"],
+        "Enter your email address here": ["Írd be itt az e-mail címedet"],
+        "Send": ["Elküldöm"],
+        "You haven't selected any products": ["Még nem választottál semmilyen terméket"],
+        "Back to start": ["Vissza a kezdéshez"],
+        "The Symptoms": ["A tünetek"],
+        "Choosing {0} for your {1} surface": ["{0} kiválasztása a {1} felületére"],
+        "Alternative products available": ["Alternatív termékek"],
+        "Your surface": ["A felületed"],
+        "Your selections for {0}": ["A választásaid {0}"],
+        "Your selection": ["A te választásod"],
+        "Download technical data sheet": ["Töltse le a műszaki adatokat"],
+        "View your choices": ["Tekintse meg a választásait"],
+        "Add to my choices": ["Bővítsd a választásaim"],
+        "Choose {0} for this": ["Válassz {0} ehhez"],
+        "Use": ["Használat"],
+        "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+          "Kérjük, vegye figyelembe, hogy ez az információ csak általános útmutatásként érhető el, és garancia nélkül. Az Ön konkrét helyzetéhez alternatív megközelítésre lehet szükség. Kétség esetén bármilyen folyamatot kipróbálni kell egy észrevétlen helyen, mielőtt általános alkalmazásra kerülne."
+        ],
+        "No matches available": ["Nincs mérkőzés elérhető"],
+        "Product Selector": ["Termékválasztó"],
+        "Press Start": ["Indító sajtó"],
+        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": ["© Szerzői jog {0} LTP. Minden jog fenntartva. Cég regisztrációs száma. {1}. VAT szám. {2}"],
+        "Choose a Surface": ["Válassz felületet"],
+        "What type of surface do you have?": ["Milyen típusú felületed van?"],
+        "Back to top": ["Vissza a tetejére"],
+        "Your LTP Product Selector choices": ["Az LTP termékválasztói választásai"],
+        "{0} added to your choices.": ["{0} hozzáadott a választásaidhoz."],
+        "Loading...": ["Betöltés..."],
+        "": {
+          "domain": "messages",
+          "plural_forms": "nplurals=2; plural=(n != 1);",
+          "lang": "hu"
+        }
+      },
+      "alias": ["HU"]
     }
   }
 });

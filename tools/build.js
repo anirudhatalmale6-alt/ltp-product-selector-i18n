@@ -55,6 +55,8 @@ function prettyJSON(value, indent) {
 function buildLanguageBlock(locales) {
   const entries = locales.map(loc => {
     const def = { messages: loc.messages };
+    if (loc.override) def.override = true;
+    if (loc.alias && loc.alias.length) def.alias = loc.alias;
     if (loc.date) def.date = loc.date;
     if (loc.formats) def.formats = loc.formats;
     return '    ' + JSON.stringify(loc.code) + ': ' + prettyJSON(def, 4);
@@ -134,8 +136,11 @@ function main() {
   console.log('build.js');
   console.log('  bundle  : ' + path.resolve(input) + '  (' + bundleSrc.length + ' bytes)');
   changes.forEach(c => console.log('  - ' + c));
-  locales.forEach(l => console.log('  + language "' + l.code + '": ' +
-    (Object.keys(l.messages).length - 1) + ' phrases' + (l.date ? ', with date names' : '')));
+  locales.forEach(l => console.log('  ' + (l.override ? '~' : '+') + ' language "' + l.code + '": ' +
+    (Object.keys(l.messages).length - 1) + ' phrases' +
+    (l.override ? '   (REPLACES the version compiled into the bundle)' : '') +
+    (l.alias && l.alias.length ? '   also answers to: ' + l.alias.join(', ') : '') +
+    (l.date ? ', with date names' : '')));
   console.log('  output  : ' + path.resolve(output) + '  (' + out.length + ' bytes, ' +
     '+' + (out.length - bundleSrc.length) + ')');
 }

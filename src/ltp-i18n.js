@@ -351,20 +351,44 @@
         };
       }
       var map = assign({}, builtIn);
-      var added = [];
+      var added = [], replaced = [];
       for (var code in config.locales) {
         if (!Object.prototype.hasOwnProperty.call(config.locales, code)) continue;
+        var def = config.locales[code];
         if (map[code]) {
-          warn('locale "' + code + '" is already built into the bundle - ' +
-               'the built-in version wins. Remove it from configure() or rebuild the bundle without it.');
-          continue;
+          // Replacing a language compiled into the bundle is a deliberate act -
+          // it silently changes text that already works - so it has to be asked
+          // for explicitly rather than happening by accident.
+          if (!def || def.override !== true) {
+            warn('locale "' + code + '" is already built into the bundle, so the built-in ' +
+                 'version wins and the one supplied here is ignored. ' +
+                 'Set override: true if you mean to replace it.');
+            continue;
+          }
+          replaced.push(code);
+        } else {
+          added.push(code);
         }
-        map[code] = loaderFor(code, config.locales[code]);
-        added.push(code);
+        var loader = loaderFor(code, def);
+        map[code] = loader;
+
+        // Alternate codes for the same language. Greek is "el" in ISO 639-1 but
+        // some systems label it "gr" (which is really the country code), and
+        // codes are sometimes cased differently. Registering both costs nothing
+        // and means the language works whichever one the API sends.
+        var aliases = def && def.alias ? [].concat(def.alias) : [];
+        for (var a = 0; a < aliases.length; a++) {
+          var alt = aliases[a];
+          if (!alt || map[alt]) continue;
+          map[alt] = loader;
+          added.push(alt + ' (alias of ' + code + ')');
+        }
       }
       LTPI18n._map = map;
+      LTPI18n._replaced = replaced;
       info('locale map: built-in [' + Object.keys(builtIn).join(', ') + ']' +
-           (added.length ? ', added [' + added.join(', ') + ']' : ', nothing added'));
+           (added.length ? ', added [' + added.join(', ') + ']' : ', nothing added') +
+           (replaced.length ? ', REPLACED [' + replaced.join(', ') + ']' : ''));
       return map;
     },
 

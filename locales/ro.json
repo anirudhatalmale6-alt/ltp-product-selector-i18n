@@ -1,29 +1,25 @@
 {
   "code": "ro",
-  "name": "ro",
+  "name": "Romanian",
+  "override": true,
   "messages": {
-    "": {
-      "domain": "messages",
-      "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n==0 || (n!=1 && n%100>=1 && n%100<=19) ? 1 : 2);",
-      "lang": "ro"
-    },
     "Toggle navigation": [
-      "Comutare navigatie"
+      "Comută navigarea"
     ],
     "Go back": [
-      "Inapoi"
+      "Întoarce-te"
     ],
     "Start again": [
-      "Cautare noua"
+      "Începe din nou"
     ],
     "My choices": [
-      "Alegerile"
+      "Alegerile mele"
     ],
     "Browse all": [
-      "Parcurgeti meniul"
+      "Răsfoiește toate"
     ],
     "Language": [
-      "Limba"
+      "Limbă"
     ],
     "All Products": [
       "Toate produsele"
@@ -32,101 +28,105 @@
       "{0} produse"
     ],
     "Product Options": [
-      "Optiuni produs"
+      "Opțiuni de produs"
     ],
     "Your {0} surface": [
-      "Suprafata {0}"
-    ],
-    "Your LTP Product Selector choices": [
-      ""
+      "Suprafața {0} ta"
     ],
     "Email sent successfully": [
       "Email trimis cu succes"
     ],
     "Here are your choices": [
-      "Acestea sunt produsele alese"
+      "Iată opțiunile tale"
     ],
     "Your Choices": [
-      "Alegerile dumneavoastra"
+      "Alegerile tale"
     ],
     "Email your choices": [
-      "Trimiteti pe email configuratia dumneavoastra"
+      "Trimite-ți opțiunile pe email"
     ],
     "Enter your email address here": [
-      "Introduceti adresa de email"
+      "Introdu-ți adresa de email aici"
     ],
     "Send": [
-      "Trimitere"
+      "Trimite"
     ],
     "You haven't selected any products": [
-      "Nu ati selectat niciun produs"
+      "Nu ai ales niciun produs"
     ],
     "Back to start": [
-      "Inapoi la pagina principala"
+      "Înapoi la început"
     ],
     "The Symptoms": [
-      "Probleme"
+      "Simptomele"
     ],
     "Choosing {0} for your {1} surface": [
-      "Alegeti {0} pentru suprafata {1} dumneavoastra"
+      "Alegerea {0} pentru suprafața {1} ta"
     ],
     "Alternative products available": [
       "Produse alternative disponibile"
     ],
     "Your surface": [
-      "Suprafata ta"
+      "Suprafața ta"
     ],
     "Your selections for {0}": [
-      "Selectiile dumneavoastra pentru {0}"
+      "Selecțiile tale pentru {0}"
     ],
     "Your selection": [
-      "Selectia dumneavoastra"
+      "Selecția ta"
     ],
     "Download technical data sheet": [
-      "Descarcare fisa date tehnice"
+      "Descarcă fișa tehnică"
     ],
     "View your choices": [
-      "Vizualizare produse alese"
-    ],
-    "{0} added to your choices.": [
-      ""
+      "Vizualizează-ți alegerile"
     ],
     "Add to my choices": [
-      "Adaugati la produsele deja alese"
+      "Adaugă la opțiunile mele"
     ],
     "Choose {0} for this": [
-      "Alegeti {0} o optiune"
+      "Alege {0} pentru asta"
     ],
     "Use": [
       "Utilizare"
     ],
     "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
-      "Va rugam sa retineti ca informatiile din acest material au scop orientativ si nu ofera nicio garantie. Situatiile specifice necesita abordare speciala. Daca aveti dubii, incercati intai produsul pe o zona mai putin vizibila inainte de a aplica pe toata suprafata."
+      "Vă rugăm să rețineți că aceste informații sunt oferite doar ca îndrumare generală și fără garanție. Circumstanțele dumneavoastră specifice pot necesita o abordare alternativă. În caz de îndoială, orice proces ar trebui încercat într-o zonă discretă înainte de aplicare generală."
     ],
     "No matches available": [
-      "Nu au fost gasite produse conform cautarii dumneavoastra"
+      "Nu sunt disponibile meciuri"
     ],
     "Product Selector": [
-      "Selectie produs"
+      "Selector de produse"
     ],
     "Press Start": [
-      "Start"
+      "Apasă Start"
     ],
     "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
-      "© Copyright LTP. Toate drepturile rezervate. Date identificare: {0}"
+      "© Drepturi de autor {0} LTP. Toate drepturile rezervate. Nr. înregistrare a companiei {1}. TVA nr. {2}"
     ],
     "Choose a Surface": [
-      "Alegeti-va tipul de suprafata"
+      "Alege o suprafață"
     ],
     "What type of surface do you have?": [
-      "Ce tip de suprafata ai?"
-    ],
-    "Loading...": [
-      "Se incarca…"
+      "Ce tip de suprafață ai?"
     ],
     "Back to top": [
-      "Sus"
-    ]
-  },
-  "_note": "Extracted from main.33ab3e17f8ae6a9cd05f.js, module 619."
+      "Înapoi sus"
+    ],
+    "Your LTP Product Selector choices": [
+      "Alegerile tale pentru selectorul de produse LTP"
+    ],
+    "{0} added to your choices.": [
+      "{0} adăugat la opțiunile tale."
+    ],
+    "Loading...": [
+      "Se încarcă..."
+    ],
+    "": {
+      "domain": "messages",
+      "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n==0 || (n!=1 && n%100>=1 && n%100<=19) ? 1 : 2);",
+      "lang": "ro"
+    }
+  }
 }

@@ -1,131 +1,131 @@
 {
-  "code": "pl",
-  "name": "Polish",
+  "code": "de",
+  "name": "German",
   "messages": {
     "Toggle navigation": [
-      "Nawigacja przełączana"
+      "Toggle Navigation"
     ],
     "Go back": [
-      "Wróć"
+      "Geh zurück"
     ],
     "Start again": [
-      "Zacznij od nowa"
+      "Fang nochmal von vorne an"
     ],
     "My choices": [
-      "Moje wybory"
+      "Meine Entscheidungen"
     ],
     "Browse all": [
-      "Przeglądaj wszystko"
+      "Durchstöbern Sie alle"
     ],
     "Language": [
-      "Język"
+      "Sprache"
     ],
     "All Products": [
-      "Wszystkie produkty"
+      "Alle Produkte"
     ],
     "{0} products": [
-      "{0} produkty"
+      "{0} Produkte"
     ],
     "Product Options": [
-      "Opcje produktowe"
+      "Produktoptionen"
     ],
     "Your {0} surface": [
-      "Twoja {0} powierzchnia"
+      "Deine {0} Oberfläche"
     ],
     "Email sent successfully": [
-      "E-mail wysłany pomyślnie"
+      "E-Mail erfolgreich gesendet"
     ],
     "Here are your choices": [
-      "Oto Twoje opcje"
+      "Hier sind deine Optionen"
     ],
     "Your Choices": [
-      "Twoje wybory"
+      "Deine Entscheidungen"
     ],
     "Email your choices": [
-      "Wyślij swoje wybory mailem"
+      "Senden Sie Ihre Optionen per E-Mail"
     ],
     "Enter your email address here": [
-      "Wpisz tutaj swój adres e-mail"
+      "Geben Sie hier Ihre E-Mail-Adresse ein"
     ],
     "Send": [
-      "Wyślij"
+      "Senden"
     ],
     "You haven't selected any products": [
-      "Nie wybrałeś żadnych produktów"
+      "Du hast keine Produkte ausgewählt"
     ],
     "Back to start": [
-      "Wracając do początku"
+      "Zurück zum Start"
     ],
     "The Symptoms": [
-      "Objawy"
+      "Die Symptome"
     ],
     "Choosing {0} for your {1} surface": [
-      "Wybór {0} dla powierzchni {1}"
+      "Die Wahl {0} für Ihre {1} Oberfläche"
     ],
     "Alternative products available": [
-      "Dostępne produkty alternatywne"
+      "Alternative Produkte verfügbar"
     ],
     "Your surface": [
-      "Twoja powierzchnia"
+      "Deine Oberfläche"
     ],
     "Your selections for {0}": [
-      "Jakie są twoje wybory do {0}"
+      "Ihre Auswahl für {0}"
     ],
     "Your selection": [
-      "Twój wybór"
+      "Deine Auswahl"
     ],
     "Download technical data sheet": [
-      "Pobierz kartę techniczną"
+      "Technisches Datenblatt herunterladen"
     ],
     "View your choices": [
-      "Zobacz swoje wybory"
+      "Sieh dir deine Auswahl an"
     ],
     "Add to my choices": [
-      "Dodaj do moich wyborów"
+      "Erweitern Sie meine Auswahl"
     ],
     "Choose {0} for this": [
-      "Wybierz {0} do tego"
+      "Wähle {0} dafür"
     ],
     "Use": [
-      "Zastosowanie"
+      "Verwendung"
     ],
     "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
-      "Prosimy pamiętać, że te informacje są dostępne wyłącznie jako ogólne wskazówki i bez gwarancji. Twoja konkretna sytuacja może wymagać alternatywnego podejścia. W razie wątpliwości każdy proces należy wypróbować w niepozornym miejscu przed ogólnym zastosowaniem."
+      "Bitte beachten Sie, dass diese Informationen nur als allgemeine Anleitung und ohne Garantie angeboten werden. Ihre spezifischen Umstände erfordern möglicherweise einen alternativen Ansatz. Im Zweifelsfall sollte jeder Prozess vor der allgemeinen Anwendung an einem unauffälligen Ort ausprobiert werden."
     ],
     "No matches available": [
-      "Brak dostępnych zapałek"
+      "Keine verfügbaren Spiele"
     ],
     "Product Selector": [
-      "Selektor produktów"
+      "Produktselektor"
     ],
     "Press Start": [
-      "Start prasowy"
+      "Drücken Sie auf Start"
     ],
     "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
-      "© Prawa autorskie {0} LTP. Wszelkie prawa zastrzeżone. Numer rejestracyjny firmy. {1}. Numer VAT {2}"
+      "© Urheberrecht {0} LTP. Alle Rechte vorbehalten. Firmenregistrierung {1}. Mehrwertsteuernummer. {2}"
     ],
     "Choose a Surface": [
-      "Wybierz powierzchnię"
+      "Wähle eine Oberfläche"
     ],
     "What type of surface do you have?": [
-      "Jaki masz rodzaj powierzchni?"
+      "Welche Art von Oberfläche hast du?"
     ],
     "Back to top": [
-      "Powrót na górę"
+      "Zurück nach oben"
     ],
     "Your LTP Product Selector choices": [
-      "Twoje wybory do wyboru produktów LTP"
+      "Ihre LTP-Produktauswahl"
     ],
     "{0} added to your choices.": [
-      "{0} dodane do twojego wyboru."
+      "{0} zu deinen Entscheidungen hinzugefügt."
     ],
     "Loading...": [
-      "Ładowanie..."
+      "Lädt..."
     ],
     "": {
       "domain": "messages",
-      "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);",
-      "lang": "pl"
+      "plural_forms": "nplurals=2; plural=(n != 1);",
+      "lang": "de"
     }
   }
 }

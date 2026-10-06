@@ -1,131 +1,131 @@
 {
-  "code": "pl",
-  "name": "Polish",
+  "code": "nl",
+  "name": "Dutch",
   "messages": {
     "Toggle navigation": [
-      "Nawigacja przełączana"
+      "Navigatie wisselen"
     ],
     "Go back": [
-      "Wróć"
+      "Ga terug"
     ],
     "Start again": [
-      "Zacznij od nowa"
+      "Begin opnieuw"
     ],
     "My choices": [
-      "Moje wybory"
+      "Mijn keuzes"
     ],
     "Browse all": [
-      "Przeglądaj wszystko"
+      "Bekijk alles"
     ],
     "Language": [
-      "Język"
+      "Taal"
     ],
     "All Products": [
-      "Wszystkie produkty"
+      "Alle producten"
     ],
     "{0} products": [
-      "{0} produkty"
+      "{0} producten"
     ],
     "Product Options": [
-      "Opcje produktowe"
+      "Productopties"
     ],
     "Your {0} surface": [
-      "Twoja {0} powierzchnia"
+      "Je {0} oppervlak"
     ],
     "Email sent successfully": [
-      "E-mail wysłany pomyślnie"
+      "E-mail succesvol verzonden"
     ],
     "Here are your choices": [
-      "Oto Twoje opcje"
+      "Hier zijn je keuzes"
     ],
     "Your Choices": [
-      "Twoje wybory"
+      "Jouw keuzes"
     ],
     "Email your choices": [
-      "Wyślij swoje wybory mailem"
+      "Mail je keuzes"
     ],
     "Enter your email address here": [
-      "Wpisz tutaj swój adres e-mail"
+      "Voer hier je e-mailadres in"
     ],
     "Send": [
-      "Wyślij"
+      "Verzenden"
     ],
     "You haven't selected any products": [
-      "Nie wybrałeś żadnych produktów"
+      "Je hebt geen producten geselecteerd"
     ],
     "Back to start": [
-      "Wracając do początku"
+      "Terug naar het begin"
     ],
     "The Symptoms": [
-      "Objawy"
+      "De symptomen"
     ],
     "Choosing {0} for your {1} surface": [
-      "Wybór {0} dla powierzchni {1}"
+      "Het kiezen van {0} voor je {1} oppervlak"
     ],
     "Alternative products available": [
-      "Dostępne produkty alternatywne"
+      "Alternatieve producten beschikbaar"
     ],
     "Your surface": [
-      "Twoja powierzchnia"
+      "Je oppervlak"
     ],
     "Your selections for {0}": [
-      "Jakie są twoje wybory do {0}"
+      "Uw keuzes voor {0}"
     ],
     "Your selection": [
-      "Twój wybór"
+      "Jouw keuze"
     ],
     "Download technical data sheet": [
-      "Pobierz kartę techniczną"
+      "Download technisch datasheet"
     ],
     "View your choices": [
-      "Zobacz swoje wybory"
+      "Bekijk je keuzes"
     ],
     "Add to my choices": [
-      "Dodaj do moich wyborów"
+      "Voeg toe aan mijn keuzes"
     ],
     "Choose {0} for this": [
-      "Wybierz {0} do tego"
+      "Kies hiervoor {0}"
     ],
     "Use": [
-      "Zastosowanie"
+      "Gebruik"
     ],
     "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
-      "Prosimy pamiętać, że te informacje są dostępne wyłącznie jako ogólne wskazówki i bez gwarancji. Twoja konkretna sytuacja może wymagać alternatywnego podejścia. W razie wątpliwości każdy proces należy wypróbować w niepozornym miejscu przed ogólnym zastosowaniem."
+      "Houd er rekening mee dat deze informatie alleen als algemene richtlijn en zonder garantie wordt aangeboden. Uw specifieke omstandigheden vereisen mogelijk een alternatieve aanpak. Bij twijfel dient elk proces eerst in een onopvallende ruimte te worden uitgeprobeerd voordat het algemeen wordt toegepast."
     ],
     "No matches available": [
-      "Brak dostępnych zapałek"
+      "Geen wedstrijden beschikbaar"
     ],
     "Product Selector": [
-      "Selektor produktów"
+      "Productselector"
     ],
     "Press Start": [
-      "Start prasowy"
+      "Druk op Start"
     ],
     "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
-      "© Prawa autorskie {0} LTP. Wszelkie prawa zastrzeżone. Numer rejestracyjny firmy. {1}. Numer VAT {2}"
+      "© Auteursrecht {0} LTP. Alle rechten voorbehouden. Bedrijfsregistratienummer {1}. BTW-nummer {2}"
     ],
     "Choose a Surface": [
-      "Wybierz powierzchnię"
+      "Kies een oppervlak"
     ],
     "What type of surface do you have?": [
-      "Jaki masz rodzaj powierzchni?"
+      "Wat voor soort oppervlak heb je?"
     ],
     "Back to top": [
-      "Powrót na górę"
+      "Terug naar boven"
     ],
     "Your LTP Product Selector choices": [
-      "Twoje wybory do wyboru produktów LTP"
+      "Uw LTP Product Selector-keuzes"
     ],
     "{0} added to your choices.": [
-      "{0} dodane do twojego wyboru."
+      "{0} toegevoegd aan je keuzes."
     ],
     "Loading...": [
-      "Ładowanie..."
+      "Laden..."
     ],
     "": {
       "domain": "messages",
-      "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);",
-      "lang": "pl"
+      "plural_forms": "nplurals=2; plural=(n != 1);",
+      "lang": "nl"
     }
   }
 }

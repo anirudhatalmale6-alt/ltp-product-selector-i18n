@@ -1,0 +1,134 @@
+{
+  "code": "el",
+  "name": "Greek",
+  "alias": [
+    "gr"
+  ],
+  "messages": {
+    "Toggle navigation": [
+      "Εναλλαγή πλοήγησης"
+    ],
+    "Go back": [
+      "Επιστροφή"
+    ],
+    "Start again": [
+      "Ξεκινήστε ξανά"
+    ],
+    "My choices": [
+      "Οι επιλογές μου"
+    ],
+    "Browse all": [
+      "Περιήγηση όλων"
+    ],
+    "Language": [
+      "Γλώσσα"
+    ],
+    "All Products": [
+      "Ολα τα Προϊόντα"
+    ],
+    "{0} products": [
+      "{0} προϊόντα"
+    ],
+    "Product Options": [
+      "Επιλογές προϊόντων"
+    ],
+    "Your {0} surface": [
+      "Η επιφάνεια {0} σας"
+    ],
+    "Email sent successfully": [
+      "Το email στάλθηκε με επιτυχία"
+    ],
+    "Here are your choices": [
+      "Εδώ είναι οι επιλογές σας"
+    ],
+    "Your Choices": [
+      "Οι επιλογές σας"
+    ],
+    "Email your choices": [
+      "Στείλτε με email τις επιλογές σας"
+    ],
+    "Enter your email address here": [
+      "Εισαγάγετε τη διεύθυνση email σας εδώ"
+    ],
+    "Send": [
+      "Αποστολή"
+    ],
+    "You haven't selected any products": [
+      "Δεν έχετε επιλέξει κανένα προϊόν"
+    ],
+    "Back to start": [
+      "Επιστροφή στην αρχή"
+    ],
+    "The Symptoms": [
+      "Τα συμπτώματα"
+    ],
+    "Choosing {0} for your {1} surface": [
+      "Επιλογή {0} για την επιφάνεια {1} σας"
+    ],
+    "Alternative products available": [
+      "Διαθέσιμα εναλλακτικά προϊόντα"
+    ],
+    "Your surface": [
+      "Η επιφάνειά σας"
+    ],
+    "Your selections for {0}": [
+      "Οι επιλογές σας για {0}"
+    ],
+    "Your selection": [
+      "Η επιλογή σας"
+    ],
+    "Download technical data sheet": [
+      "Λήψη φύλλου τεχνικών δεδομένων"
+    ],
+    "View your choices": [
+      "Δείτε τις επιλογές σας"
+    ],
+    "Add to my choices": [
+      "Προσθήκη στις επιλογές μου"
+    ],
+    "Choose {0} for this": [
+      "Επιλέξτε {0} για αυτό"
+    ],
+    "Use": [
+      "Χρήση"
+    ],
+    "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+      "Λάβετε υπόψη ότι αυτές οι πληροφορίες προσφέρονται μόνο ως γενική καθοδήγηση και χωρίς εγγύηση. Οι συγκεκριμένες περιστάσεις σας μπορεί να χρειάζονται μια εναλλακτική προσέγγιση. Σε περίπτωση αμφιβολίας, οποιαδήποτε διαδικασία θα πρέπει να δοκιμαστεί σε μια δυσδιάκριτη περιοχή πριν από τη γενική εφαρμογή."
+    ],
+    "No matches available": [
+      "Δεν υπάρχουν διαθέσιμοι αγώνες"
+    ],
+    "Product Selector": [
+      "Επιλογέας προϊόντων"
+    ],
+    "Press Start": [
+      "Πατήστε Έναρξη"
+    ],
+    "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
+      "© Πνευματικά δικαιώματα {0} LTP. Ολα τα δικαιώματα διατηρούνται. Αριθμός Μητρώου Εταιρείας {1}. Αριθμός ΦΠΑ {2}"
+    ],
+    "Choose a Surface": [
+      "Επιλέξτε μία επιφάνεια"
+    ],
+    "What type of surface do you have?": [
+      "Τι τύπο επιφάνειας έχετε;"
+    ],
+    "Back to top": [
+      "Επιστροφή στην κορυφή"
+    ],
+    "Your LTP Product Selector choices": [
+      "Οι επιλογές σας για τον Επιλογέα προϊόντων LTP"
+    ],
+    "{0} added to your choices.": [
+      "{0} προστεθεί στις επιλογές σας."
+    ],
+    "Loading...": [
+      "Φόρτωση..."
+    ],
+    "": {
+      "domain": "messages",
+      "plural_forms": "nplurals=2; plural=(n != 1);",
+      "lang": "el"
+    }
+  }
+}

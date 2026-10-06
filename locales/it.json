@@ -1,131 +1,131 @@
 {
-  "code": "pl",
-  "name": "Polish",
+  "code": "it",
+  "name": "Italian",
   "messages": {
     "Toggle navigation": [
-      "Nawigacja przełączana"
+      "Commuta navigazione"
     ],
     "Go back": [
-      "Wróć"
+      "Torna indietro"
     ],
     "Start again": [
-      "Zacznij od nowa"
+      "Ricomincia"
     ],
     "My choices": [
-      "Moje wybory"
+      "Le mie scelte"
     ],
     "Browse all": [
-      "Przeglądaj wszystko"
+      "Sfoglia tutto"
     ],
     "Language": [
-      "Język"
+      "Lingua"
     ],
     "All Products": [
-      "Wszystkie produkty"
+      "Tutti i prodotti"
     ],
     "{0} products": [
-      "{0} produkty"
+      "{0} Prodotti"
     ],
     "Product Options": [
-      "Opcje produktowe"
+      "Opzioni di prodotto"
     ],
     "Your {0} surface": [
-      "Twoja {0} powierzchnia"
+      "La tua {0} superficie"
     ],
     "Email sent successfully": [
-      "E-mail wysłany pomyślnie"
+      "Email inviata con successo"
     ],
     "Here are your choices": [
-      "Oto Twoje opcje"
+      "Ecco le tue scelte"
     ],
     "Your Choices": [
-      "Twoje wybory"
+      "Le tue scelte"
     ],
     "Email your choices": [
-      "Wyślij swoje wybory mailem"
+      "Invia via email le tue scelte"
     ],
     "Enter your email address here": [
-      "Wpisz tutaj swój adres e-mail"
+      "Inserisci qui il tuo indirizzo email"
     ],
     "Send": [
-      "Wyślij"
+      "Invia"
     ],
     "You haven't selected any products": [
-      "Nie wybrałeś żadnych produktów"
+      "Non hai selezionato nessun prodotto"
     ],
     "Back to start": [
-      "Wracając do początku"
+      "Ritorno all'inizio"
     ],
     "The Symptoms": [
-      "Objawy"
+      "I sintomi"
     ],
     "Choosing {0} for your {1} surface": [
-      "Wybór {0} dla powierzchni {1}"
+      "Scegliere {0} per la tua superficie {1}"
     ],
     "Alternative products available": [
-      "Dostępne produkty alternatywne"
+      "Prodotti alternativi disponibili"
     ],
     "Your surface": [
-      "Twoja powierzchnia"
+      "La tua superficie"
     ],
     "Your selections for {0}": [
-      "Jakie są twoje wybory do {0}"
+      "Le tue scelte per {0}"
     ],
     "Your selection": [
-      "Twój wybór"
+      "La tua scelta"
     ],
     "Download technical data sheet": [
-      "Pobierz kartę techniczną"
+      "Scarica la scheda tecnica"
     ],
     "View your choices": [
-      "Zobacz swoje wybory"
+      "Visualizza le tue scelte"
     ],
     "Add to my choices": [
-      "Dodaj do moich wyborów"
+      "Aggiungi alle mie scelte"
     ],
     "Choose {0} for this": [
-      "Wybierz {0} do tego"
+      "Scegli {0} per questo"
     ],
     "Use": [
-      "Zastosowanie"
+      "Utilizzo"
     ],
     "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
-      "Prosimy pamiętać, że te informacje są dostępne wyłącznie jako ogólne wskazówki i bez gwarancji. Twoja konkretna sytuacja może wymagać alternatywnego podejścia. W razie wątpliwości każdy proces należy wypróbować w niepozornym miejscu przed ogólnym zastosowaniem."
+      "Si prega di notare che queste informazioni sono fornite solo come indicazioni generali e senza garanzie. Le tue circostanze specifiche potrebbero richiedere un approccio alternativo. In caso di dubbio, qualsiasi procedura dovrebbe essere sperimentata in un'area discreta prima della domanda generale."
     ],
     "No matches available": [
-      "Brak dostępnych zapałek"
+      "Nessuna partita disponibile"
     ],
     "Product Selector": [
-      "Selektor produktów"
+      "Selezionatore di prodotto"
     ],
     "Press Start": [
-      "Start prasowy"
+      "Premi Start"
     ],
     "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
-      "© Prawa autorskie {0} LTP. Wszelkie prawa zastrzeżone. Numer rejestracyjny firmy. {1}. Numer VAT {2}"
+      "© Copyright {0} LTP. Tutti i diritti riservati. Registrazione della società n. {1}. IVA n. {2}"
     ],
     "Choose a Surface": [
-      "Wybierz powierzchnię"
+      "Scegli una superficie"
     ],
     "What type of surface do you have?": [
-      "Jaki masz rodzaj powierzchni?"
+      "Che tipo di superficie hai?"
     ],
     "Back to top": [
-      "Powrót na górę"
+      "Torna su"
     ],
     "Your LTP Product Selector choices": [
-      "Twoje wybory do wyboru produktów LTP"
+      "Le tue scelte di selettore di prodotto LTP"
     ],
     "{0} added to your choices.": [
-      "{0} dodane do twojego wyboru."
+      "{0} aggiungeva alle tue scelte."
     ],
     "Loading...": [
-      "Ładowanie..."
+      "Caricamento..."
     ],
     "": {
       "domain": "messages",
-      "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);",
-      "lang": "pl"
+      "plural_forms": "nplurals=2; plural=(n != 1);",
+      "lang": "it"
     }
   }
 }

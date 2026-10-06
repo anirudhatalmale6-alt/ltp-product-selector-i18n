@@ -1,131 +1,134 @@
 {
-  "code": "pl",
-  "name": "Polish",
+  "code": "hu",
+  "name": "Hungarian",
+  "alias": [
+    "HU"
+  ],
   "messages": {
     "Toggle navigation": [
-      "Nawigacja przełączana"
+      "Navigáció kapcsolója"
     ],
     "Go back": [
-      "Wróć"
+      "Menj vissza"
     ],
     "Start again": [
-      "Zacznij od nowa"
+      "Kezdjük újrakezdeni"
     ],
     "My choices": [
-      "Moje wybory"
+      "A döntéseim"
     ],
     "Browse all": [
-      "Przeglądaj wszystko"
+      "Böngésszük mindet"
     ],
     "Language": [
-      "Język"
+      "Nyelv"
     ],
     "All Products": [
-      "Wszystkie produkty"
+      "Minden termék"
     ],
     "{0} products": [
-      "{0} produkty"
+      "{0} termékek"
     ],
     "Product Options": [
-      "Opcje produktowe"
+      "Termékopciók"
     ],
     "Your {0} surface": [
-      "Twoja {0} powierzchnia"
+      "A {0} felületed"
     ],
     "Email sent successfully": [
-      "E-mail wysłany pomyślnie"
+      "Sikeresen elküldött e-mail"
     ],
     "Here are your choices": [
-      "Oto Twoje opcje"
+      "Íme a választásaid"
     ],
     "Your Choices": [
-      "Twoje wybory"
+      "A te döntéseid"
     ],
     "Email your choices": [
-      "Wyślij swoje wybory mailem"
+      "Küldd el a választásaidat e-mailben"
     ],
     "Enter your email address here": [
-      "Wpisz tutaj swój adres e-mail"
+      "Írd be itt az e-mail címedet"
     ],
     "Send": [
-      "Wyślij"
+      "Elküldöm"
     ],
     "You haven't selected any products": [
-      "Nie wybrałeś żadnych produktów"
+      "Még nem választottál semmilyen terméket"
     ],
     "Back to start": [
-      "Wracając do początku"
+      "Vissza a kezdéshez"
     ],
     "The Symptoms": [
-      "Objawy"
+      "A tünetek"
     ],
     "Choosing {0} for your {1} surface": [
-      "Wybór {0} dla powierzchni {1}"
+      "{0} kiválasztása a {1} felületére"
     ],
     "Alternative products available": [
-      "Dostępne produkty alternatywne"
+      "Alternatív termékek"
     ],
     "Your surface": [
-      "Twoja powierzchnia"
+      "A felületed"
     ],
     "Your selections for {0}": [
-      "Jakie są twoje wybory do {0}"
+      "A választásaid {0}"
     ],
     "Your selection": [
-      "Twój wybór"
+      "A te választásod"
     ],
     "Download technical data sheet": [
-      "Pobierz kartę techniczną"
+      "Töltse le a műszaki adatokat"
     ],
     "View your choices": [
-      "Zobacz swoje wybory"
+      "Tekintse meg a választásait"
     ],
     "Add to my choices": [
-      "Dodaj do moich wyborów"
+      "Bővítsd a választásaim"
     ],
     "Choose {0} for this": [
-      "Wybierz {0} do tego"
+      "Válassz {0} ehhez"
     ],
     "Use": [
-      "Zastosowanie"
+      "Használat"
     ],
     "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
-      "Prosimy pamiętać, że te informacje są dostępne wyłącznie jako ogólne wskazówki i bez gwarancji. Twoja konkretna sytuacja może wymagać alternatywnego podejścia. W razie wątpliwości każdy proces należy wypróbować w niepozornym miejscu przed ogólnym zastosowaniem."
+      "Kérjük, vegye figyelembe, hogy ez az információ csak általános útmutatásként érhető el, és garancia nélkül. Az Ön konkrét helyzetéhez alternatív megközelítésre lehet szükség. Kétség esetén bármilyen folyamatot kipróbálni kell egy észrevétlen helyen, mielőtt általános alkalmazásra kerülne."
     ],
     "No matches available": [
-      "Brak dostępnych zapałek"
+      "Nincs mérkőzés elérhető"
     ],
     "Product Selector": [
-      "Selektor produktów"
+      "Termékválasztó"
     ],
     "Press Start": [
-      "Start prasowy"
+      "Indító sajtó"
     ],
     "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
-      "© Prawa autorskie {0} LTP. Wszelkie prawa zastrzeżone. Numer rejestracyjny firmy. {1}. Numer VAT {2}"
+      "© Szerzői jog {0} LTP. Minden jog fenntartva. Cég regisztrációs száma. {1}. VAT szám. {2}"
     ],
     "Choose a Surface": [
-      "Wybierz powierzchnię"
+      "Válassz felületet"
     ],
     "What type of surface do you have?": [
-      "Jaki masz rodzaj powierzchni?"
+      "Milyen típusú felületed van?"
     ],
     "Back to top": [
-      "Powrót na górę"
+      "Vissza a tetejére"
     ],
     "Your LTP Product Selector choices": [
-      "Twoje wybory do wyboru produktów LTP"
+      "Az LTP termékválasztói választásai"
     ],
     "{0} added to your choices.": [
-      "{0} dodane do twojego wyboru."
+      "{0} hozzáadott a választásaidhoz."
     ],
     "Loading...": [
-      "Ładowanie..."
+      "Betöltés..."
     ],
     "": {
       "domain": "messages",
-      "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<12 || n%100>14) ? 1 : 2);",
-      "lang": "pl"
+      "plural_forms": "nplurals=2; plural=(n != 1);",
+      "lang": "hu"
     }
   }
 }
