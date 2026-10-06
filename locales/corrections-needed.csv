@@ -1,0 +1,15 @@
+﻿Language,Code,English phrase,Current translation,What is wrong,What it should say
+CS,cs,Press Start,Press Start,still in English - not translated,
+CS,cs,No matches available,Nejsou k dispozici žádné zápasy,"wrong meaning - ""zápas"" is a sports fixture",should mean: no results / no matching products were found
+DE,de,No matches available,Keine verfügbaren Spiele,"wrong meaning - ""spiel"" is a sports fixture",should mean: no results / no matching products were found
+EL,el,No matches available,Δεν υπάρχουν διαθέσιμοι αγώνες,"wrong meaning - ""αγών"" is a sports fixture",should mean: no results / no matching products were found
+ES,es,No matches available,No hay combates disponibles,"wrong meaning - ""combate"" is a sports fixture",should mean: no results / no matching products were found
+FR,fr,No matches available,Aucun match disponible,"wrong meaning - ""match"" is a sports fixture",should mean: no results / no matching products were found
+HU,hu,No matches available,Nincs mérkőzés elérhető,"wrong meaning - ""mérkőzés"" is a sports fixture",should mean: no results / no matching products were found
+HU,hu,Press Start,Indító sajtó,"wrong meaning - ""sajtó"" is the press / newspapers",should mean: push the Start button
+IT,it,No matches available,Nessuna partita disponibile,"wrong meaning - ""partita"" is a sports fixture",should mean: no results / no matching products were found
+NL,nl,No matches available,Geen wedstrijden beschikbaar,"wrong meaning - ""wedstrijd"" is a sports fixture",should mean: no results / no matching products were found
+PL,pl,No matches available,Brak dostępnych zapałek,"wrong meaning - ""zapał"" is a matchstick",should mean: no results / no matching products were found
+PL,pl,Press Start,Start prasowy,"wrong meaning - ""prasow"" is the press / newspapers",should mean: push the Start button
+RO,ro,No matches available,Nu sunt disponibile meciuri,"wrong meaning - ""meci"" is a sports fixture",should mean: no results / no matching products were found
+TR,tr,© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2},© Telif Hakkı {0} LTP. Her hakkı saklıdır. Şirket Kayıt No. KDV No. {2},missing {1} - the value it stands for never appears on the page,"same wording, with {1} put back in the right place. English is: © Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}"
