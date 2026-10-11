@@ -67,7 +67,9 @@ if (!files.length) {
 const locales = files.map(f => {
   const j = JSON.parse(fs.readFileSync(f, 'utf8'));
   return { file: f, code: j.code, messages: j.messages || {} };
-});
+// English is the source language - a phrase "left in English" there is simply
+// the original, not an untranslated cell.
+}).filter(l => String(l.code).split('-')[0].toLowerCase() !== 'en');
 
 let flagged = 0;
 

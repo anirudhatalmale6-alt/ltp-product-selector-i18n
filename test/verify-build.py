@@ -154,8 +154,12 @@ with sync_playwright() as p:
         return o;
     }""")
     print("\n== English, Romanian, Turkish ==")
-    check("tr Product Selector", built_in["tr"]["Product Selector"][0], "Ürün Rehberi")
-    check("tr Toggle navigation", built_in["tr"]["Toggle navigation"][0], "Gezinmeyi Değiştir")
+    # Turkish wording is supplied by the client now, so assert it is translated
+    # rather than equal to any particular string.
+    check_true("tr Product Selector translated  %r" % built_in["tr"]["Product Selector"][0],
+               built_in["tr"]["Product Selector"][0] != "Product Selector")
+    check_true("tr Toggle navigation translated  %r" % built_in["tr"]["Toggle navigation"][0],
+               built_in["tr"]["Toggle navigation"][0] != "Toggle navigation")
     check_true("ro Product Selector translated  %r" % built_in["ro"]["Product Selector"][0],
                built_in["ro"]["Product Selector"][0] != "Product Selector")
     check("en apostrophe intact", built_in["en"]["You haven't selected any products"][0],
@@ -200,7 +204,7 @@ with sync_playwright() as p:
 
     # switch languages through the real UI
     print("\n== switching through the app's own UI ==")
-    for label, expect in [("Polski", None), ("Turkce", "Ürün Rehberi"), ("English", "Product Selector")]:
+    for label, expect in [("Polski", None), ("Turkce", None), ("English", "Product Selector")]:
         link = pg.locator("a", has_text=label).first
         if link.count():
             link.click()

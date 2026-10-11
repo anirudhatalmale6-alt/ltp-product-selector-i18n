@@ -485,7 +485,7 @@ LTPI18n.configure({
         "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
           "Vă rugăm să rețineți că aceste informații sunt oferite doar ca îndrumare generală și fără garanție. Circumstanțele dumneavoastră specifice pot necesita o abordare alternativă. În caz de îndoială, orice proces ar trebui încercat într-o zonă discretă înainte de aplicare generală."
         ],
-        "No matches available": ["Nu sunt disponibile meciuri"],
+        "No matches available": ["Nu s-au găsit rezultate"],
         "Product Selector": ["Selector de produse"],
         "Press Start": ["Apasă Start"],
         "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
@@ -501,6 +501,58 @@ LTPI18n.configure({
           "domain": "messages",
           "plural_forms": "nplurals=3; plural=(n==1 ? 0 : n==0 || (n!=1 && n%100>=1 && n%100<=19) ? 1 : 2);",
           "lang": "ro"
+        }
+      },
+      "override": true
+    },
+    "tr": {
+      "messages": {
+        "Toggle navigation": ["Gezinmeyi Değiştir"],
+        "Go back": ["Geri"],
+        "Start again": ["Tekrar başla"],
+        "My choices": ["Seçimler"],
+        "Browse all": ["Tümü Gör"],
+        "Language": ["Dil"],
+        "All Products": ["Tüm Ürünler"],
+        "{0} products": ["{0} Ürün"],
+        "Product Options": ["Ürün Seçenekleri"],
+        "Your {0} surface": ["{0} Zeminler"],
+        "Email sent successfully": ["E-posta başarı ile gönderildi"],
+        "Here are your choices": ["Seçtiğiniz Ürünler"],
+        "Your Choices": ["Seçtikleriniz"],
+        "Email your choices": ["Seçtiklerinizi E-posta ile gönderin"],
+        "Enter your email address here": ["E-posta adersinizi girin"],
+        "Send": ["Gönder"],
+        "You haven't selected any products": ["Ürün Seçimi yapmadınız"],
+        "Back to start": ["Başa dön"],
+        "The Symptoms": ["Problemler"],
+        "Choosing {0} for your {1} surface": ["{1} Zeminleriniz için  {0} seçiniz"],
+        "Alternative products available": ["Alternatif ürünler mevcuttur"],
+        "Your surface": ["Zemininiz"],
+        "Your selections for {0}": ["{0} için seçiminiz"],
+        "Your selection": ["Seçiminiz"],
+        "Download technical data sheet": ["Teknik veri dosyasını indir"],
+        "View your choices": ["Seçtiğiniz ürünler"],
+        "Add to my choices": ["seçimlerime Ekle"],
+        "Choose {0} for this": ["Bunun için {0} seçiniz"],
+        "Use": ["Kullan"],
+        "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
+          "Bu bilgiler garanti edilmeksizin sunulmaktadır. Malzeme, yerel koşulları ve uygulama yapılacak yüzeyleri dikkate alacak şekilde kullanılmalıdır. Sonuçlarından emin olmak adına, ürünü göze çarpmayan bir alanda denenmesi tavsiye edilir."
+        ],
+        "No matches available": ["Eşleşme bulunamadı"],
+        "Product Selector": ["Ürün tercihi"],
+        "Press Start": ["Başla"],
+        "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": ["© Telif Hakkı {0} LTP. Her hakkı saklıdır. Şirket Kayıt No. KDV No. {2}"],
+        "Choose a Surface": ["Zemin tipini seçin"],
+        "What type of surface do you have?": ["Ne tip bir yüzeyiniz var?"],
+        "Back to top": ["Yukaraya dön."],
+        "Your LTP Product Selector choices": ["LTP Ürün Seçici tercihleriniz"],
+        "{0} added to your choices.": ["{0} seçimlerinize eklendi."],
+        "Loading...": ["Yükleniyor..."],
+        "": {
+          "domain": "messages",
+          "plural_forms": "nplurals=2; plural=(n != 1);",
+          "lang": "tr"
         }
       },
       "override": true
@@ -539,9 +591,9 @@ LTPI18n.configure({
         "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
           "Prosimy pamiętać, że te informacje są dostępne wyłącznie jako ogólne wskazówki i bez gwarancji. Twoja konkretna sytuacja może wymagać alternatywnego podejścia. W razie wątpliwości każdy proces należy wypróbować w niepozornym miejscu przed ogólnym zastosowaniem."
         ],
-        "No matches available": ["Brak dostępnych zapałek"],
+        "No matches available": ["Brak wyników"],
         "Product Selector": ["Selektor produktów"],
-        "Press Start": ["Start prasowy"],
+        "Press Start": ["Zacznij tutaj"],
         "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
           "© Prawa autorskie {0} LTP. Wszelkie prawa zastrzeżone. Numer rejestracyjny firmy. {1}. Numer VAT {2}"
         ],
@@ -592,9 +644,9 @@ LTPI18n.configure({
         "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
           "Upozorňujeme, že tyto informace jsou poskytovány pouze jako obecné pokyny a bez záruky. Vaše konkrétní situace může vyžadovat alternativní přístup. V případě pochybností by měl být jakýkoli proces vyzkoušen na nenápadném místě před běžnou aplikací."
         ],
-        "No matches available": ["Nejsou k dispozici žádné zápasy"],
+        "No matches available": ["Nejsou k dispozici žádné výsledky"],
         "Product Selector": ["Výběrový systém"],
-        "Press Start": ["Press Start"],
+        "Press Start": ["Stiskněte Start"],
         "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": ["© Copyright {0} LTP. Všechna práva vyhrazena. Registrační číslo společnosti {1}. DPH č. {2}"],
         "Choose a Surface": ["Vyberte si povrch"],
         "What type of surface do you have?": ["Jaký typ povrchu máte?"],
@@ -696,7 +748,7 @@ LTPI18n.configure({
         "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
           "Houd er rekening mee dat deze informatie alleen als algemene richtlijn en zonder garantie wordt aangeboden. Uw specifieke omstandigheden vereisen mogelijk een alternatieve aanpak. Bij twijfel dient elk proces eerst in een onopvallende ruimte te worden uitgeprobeerd voordat het algemeen wordt toegepast."
         ],
-        "No matches available": ["Geen wedstrijden beschikbaar"],
+        "No matches available": ["Geen resultaten beschikbaar"],
         "Product Selector": ["Productselector"],
         "Press Start": ["Druk op Start"],
         "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": ["© Auteursrecht {0} LTP. Alle rechten voorbehouden. Bedrijfsregistratienummer {1}. BTW-nummer {2}"],
@@ -747,7 +799,7 @@ LTPI18n.configure({
         "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
           "Veuillez noter que ces informations sont fournies uniquement à titre de guide général et sans garantie. Votre situation spécifique peut nécessiter une approche alternative. En cas de doute, tout procédé doit être testé dans un endroit discret avant la demande générale."
         ],
-        "No matches available": ["Aucun match disponible"],
+        "No matches available": ["Aucun résultat disponible"],
         "Product Selector": ["Sélecteur de produit"],
         "Press Start": ["Appuyez sur Start"],
         "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
@@ -800,7 +852,7 @@ LTPI18n.configure({
         "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
           "Bitte beachten Sie, dass diese Informationen nur als allgemeine Anleitung und ohne Garantie angeboten werden. Ihre spezifischen Umstände erfordern möglicherweise einen alternativen Ansatz. Im Zweifelsfall sollte jeder Prozess vor der allgemeinen Anwendung an einem unauffälligen Ort ausprobiert werden."
         ],
-        "No matches available": ["Keine verfügbaren Spiele"],
+        "No matches available": ["Keine Ergebnisse verfügbar"],
         "Product Selector": ["Produktselektor"],
         "Press Start": ["Drücken Sie auf Start"],
         "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
@@ -853,7 +905,7 @@ LTPI18n.configure({
         "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
           "Si prega di notare che queste informazioni sono fornite solo come indicazioni generali e senza garanzie. Le tue circostanze specifiche potrebbero richiedere un approccio alternativo. In caso di dubbio, qualsiasi procedura dovrebbe essere sperimentata in un'area discreta prima della domanda generale."
         ],
-        "No matches available": ["Nessuna partita disponibile"],
+        "No matches available": ["Nessun risultato disponibile"],
         "Product Selector": ["Selezionatore di prodotto"],
         "Press Start": ["Premi Start"],
         "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": ["© Copyright {0} LTP. Tutti i diritti riservati. Registrazione della società n. {1}. IVA n. {2}"],
@@ -904,7 +956,7 @@ LTPI18n.configure({
         "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
           "Ten en cuenta que esta información se ofrece solo como orientación general y sin garantía. Tus circunstancias específicas pueden requerir un enfoque alternativo. En caso de duda, cualquier proceso debe probarse en un lugar discreto antes de la solicitud general."
         ],
-        "No matches available": ["No hay combates disponibles"],
+        "No matches available": ["No hay resultados disponibles"],
         "Product Selector": ["Selector de productos"],
         "Press Start": ["Pulsa Start"],
         "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
@@ -957,7 +1009,7 @@ LTPI18n.configure({
         "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
           "Λάβετε υπόψη ότι αυτές οι πληροφορίες προσφέρονται μόνο ως γενική καθοδήγηση και χωρίς εγγύηση. Οι συγκεκριμένες περιστάσεις σας μπορεί να χρειάζονται μια εναλλακτική προσέγγιση. Σε περίπτωση αμφιβολίας, οποιαδήποτε διαδικασία θα πρέπει να δοκιμαστεί σε μια δυσδιάκριτη περιοχή πριν από τη γενική εφαρμογή."
         ],
-        "No matches available": ["Δεν υπάρχουν διαθέσιμοι αγώνες"],
+        "No matches available": ["Δεν υπάρχουν διαθέσιμα αποτελέσματα"],
         "Product Selector": ["Επιλογέας προϊόντων"],
         "Press Start": ["Πατήστε Έναρξη"],
         "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": [
@@ -1011,9 +1063,9 @@ LTPI18n.configure({
         "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
           "Kérjük, vegye figyelembe, hogy ez az információ csak általános útmutatásként érhető el, és garancia nélkül. Az Ön konkrét helyzetéhez alternatív megközelítésre lehet szükség. Kétség esetén bármilyen folyamatot kipróbálni kell egy észrevétlen helyen, mielőtt általános alkalmazásra kerülne."
         ],
-        "No matches available": ["Nincs mérkőzés elérhető"],
+        "No matches available": ["Nincs megjeleníthető találat"],
         "Product Selector": ["Termékválasztó"],
-        "Press Start": ["Indító sajtó"],
+        "Press Start": ["Kezdje itt"],
         "© Copyright {0} LTP. All rights reserved. Company Registration No. {1}. VAT No. {2}": ["© Szerzői jog {0} LTP. Minden jog fenntartva. Cég regisztrációs száma. {1}. VAT szám. {2}"],
         "Choose a Surface": ["Válassz felületet"],
         "What type of surface do you have?": ["Milyen típusú felületed van?"],

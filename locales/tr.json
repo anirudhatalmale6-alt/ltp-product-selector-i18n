@@ -1,12 +1,8 @@
 {
   "code": "tr",
-  "name": "tr",
+  "name": "Turkish",
+  "override": true,
   "messages": {
-    "": {
-      "domain": "messages",
-      "plural_forms": "nplurals=2; plural=(n != 1);",
-      "lang": "tr"
-    },
     "Toggle navigation": [
       "Gezinmeyi Değiştir"
     ],
@@ -17,10 +13,10 @@
       "Tekrar başla"
     ],
     "My choices": [
-      "Seçimlerim"
+      "Seçimler"
     ],
     "Browse all": [
-      "Tüm Ürünler"
+      "Tümü Gör"
     ],
     "Language": [
       "Dil"
@@ -65,13 +61,13 @@
       "Problemler"
     ],
     "Choosing {0} for your {1} surface": [
-      "{1} Zeminleriniz için {0} seçiniz"
+      "{1} Zeminleriniz için  {0} seçiniz"
     ],
     "Alternative products available": [
       "Alternatif ürünler mevcuttur"
     ],
     "Your surface": [
-      "Zemin Türü"
+      "Zemininiz"
     ],
     "Your selections for {0}": [
       "{0} için seçiminiz"
@@ -83,16 +79,16 @@
       "Teknik veri dosyasını indir"
     ],
     "View your choices": [
-      "Seçtiğiniz Ürünler"
+      "Seçtiğiniz ürünler"
     ],
     "Add to my choices": [
-      "Seçimlerime Ekle"
+      "seçimlerime Ekle"
     ],
     "Choose {0} for this": [
       "Bunun için {0} seçiniz"
     ],
     "Use": [
-      "Önerilen ürün"
+      "Kullan"
     ],
     "Please note that this information is offered as general guidance only and without guarantee. Your specific circumstances may need an alternative approach. In case of doubt, any process should be tried out in an inconspicuous area before general application.": [
       "Bu bilgiler garanti edilmeksizin sunulmaktadır. Malzeme, yerel koşulları ve uygulama yapılacak yüzeyleri dikkate alacak şekilde kullanılmalıdır. Sonuçlarından emin olmak adına, ürünü göze çarpmayan bir alanda denenmesi tavsiye edilir."
@@ -101,7 +97,7 @@
       "Eşleşme bulunamadı"
     ],
     "Product Selector": [
-      "Ürün Rehberi"
+      "Ürün tercihi"
     ],
     "Press Start": [
       "Başla"
@@ -115,12 +111,22 @@
     "What type of surface do you have?": [
       "Ne tip bir yüzeyiniz var?"
     ],
-    "Loading...": [
-      "Yükleniyor…"
-    ],
     "Back to top": [
-      "Yukaraya dön"
-    ]
-  },
-  "_note": "Extracted from main.33ab3e17f8ae6a9cd05f.js, module 624."
+      "Yukaraya dön."
+    ],
+    "Your LTP Product Selector choices": [
+      "LTP Ürün Seçici tercihleriniz"
+    ],
+    "{0} added to your choices.": [
+      "{0} seçimlerinize eklendi."
+    ],
+    "Loading...": [
+      "Yükleniyor..."
+    ],
+    "": {
+      "domain": "messages",
+      "plural_forms": "nplurals=2; plural=(n != 1);",
+      "lang": "tr"
+    }
+  }
 }

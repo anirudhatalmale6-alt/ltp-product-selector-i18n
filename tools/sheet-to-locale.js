@@ -18,6 +18,7 @@
 const fs = require('fs');
 const path = require('path');
 const csv = require('./lib/csv');
+const B = require('./lib/bundle');
 
 function die(msg) { console.error('ERROR: ' + msg); process.exit(1); }
 
@@ -47,7 +48,7 @@ const code = opt('--code');
 const name = opt('--name');
 const output = opt('-o');
 const input = argv.filter((a, i) => !a.startsWith('-') &&
-  !['--code', '--name', '-o', '--column', '--alias'].some(f => argv.indexOf(f) !== -1 && i === argv.indexOf(f) + 1))[0];
+  !['--code', '--name', '-o', '--column', '--alias', '--allow-preexisting'].some(f => argv.indexOf(f) !== -1 && i === argv.indexOf(f) + 1))[0];
 
 if (!input || !code || !output) {
   die('usage: node tools/sheet-to-locale.js <sheet.csv> --code <xx> --name <Name> -o <out.json>');
@@ -139,6 +140,38 @@ if (phExtra.length) {
   phExtra.forEach(p => console.log('         ' + p.extra.join(' ') + '  invented in  ' +
     JSON.stringify(p.source.slice(0, 56))));
   fatal += phExtra.length;
+}
+
+// A placeholder fault that is IDENTICAL to the text already running live is
+// not a regression - it is the status quo for that one phrase. Blocking the
+// whole language for it would withhold the other, genuine improvements.
+// --allow-preexisting <bundle.js> permits exactly those, and nothing else:
+// a fault the live version does not have still stops the build.
+const allowFrom = opt('--allow-preexisting');
+if (fatal && allowFrom) {
+  if (!fs.existsSync(allowFrom)) die('no such bundle: ' + allowFrom);
+  const bundleSrc = fs.readFileSync(allowFrom, 'utf8');
+  const dict = (B.findDictionaries(bundleSrc).find(d => String(d.lang).split('_')[0] === code) || {}).dict;
+  if (!dict) die('"' + code + '" is not compiled into ' + allowFrom + ', so nothing can be pre-existing');
+
+  const stillFatal = [];
+  const excused = [];
+  for (const p of phMissing.concat(phExtra)) {
+    const live = dict[p.source] ? dict[p.source][0] : undefined;
+    const now = messages[p.source] ? messages[p.source][0] : undefined;
+    if (live !== undefined && live === now) excused.push(p.source);
+    else stillFatal.push(p);
+  }
+  if (excused.length) {
+    console.log('\n  [PRE-EXISTING] ' + excused.length + ' fault(s) identical to the live text, allowed:');
+    excused.forEach(s2 => console.log('         ' + JSON.stringify(s2.slice(0, 64))));
+    console.log('         These are unchanged from what the site shows today - not a regression,');
+    console.log('         but still worth fixing.');
+  }
+  fatal = stillFatal.length;
+  if (fatal) {
+    console.log('\n  ' + fatal + ' fault(s) are NOT pre-existing - these would be regressions.');
+  }
 }
 
 if (fatal) {
